@@ -1,0 +1,857 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: #2c3e50;
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #1a365d;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #d4af37, #b8860b);
+}
+
+/* Navigation */
+.navbar {
+    background: rgba(26, 54, 93, 0.95);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.nav-logo h2 {
+    color: #d4af37;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: #d4af37;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #d4af37;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.bar {
+    width: 25px;
+    height: 3px;
+    background: #fff;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a365d 0%, #2c5aa0 50%, #1a365d 100%);
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="scroll" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse"><rect width="200" height="200" fill="none"/><path d="M50 50 L150 50 L150 150 L50 150 Z" fill="none" stroke="rgba(212,175,55,0.1)" stroke-width="2"/><text x="100" y="100" text-anchor="middle" fill="rgba(212,175,55,0.1)" font-family="serif" font-size="20">תורה</text></pattern></defs><rect width="100%" height="100%" fill="url(%23scroll)"/></svg>');
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-tagline {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.cta-button {
+    background: linear-gradient(135deg, #d4af37, #b8860b);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+}
+
+/* Sections */
+.lessons-section, .names-section, .practice-section, .resources-section, .dashboard-section {
+    padding: 80px 0;
+}
+
+.lessons-section {
+    background: #fff;
+}
+
+.names-section {
+    background: #f8f9fa;
+}
+
+.practice-section {
+    background: #fff;
+}
+
+.resources-section {
+    background: #f8f9fa;
+}
+
+.dashboard-section {
+    background: #fff;
+}
+
+/* Lesson Modules */
+.lesson-module {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    border-left: 5px solid #d4af37;
+}
+
+.lesson-module h3 {
+    color: #1a365d;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Alphabet Grid */
+.alphabet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.alphabet-card {
+    background: linear-gradient(135deg, #1a365d, #2c5aa0);
+    color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.alphabet-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.alphabet-card .hebrew {
+    font-family: 'Noto Sans Hebrew', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.alphabet-card .transliteration {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Flashcard */
+.flashcard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem 0;
+}
+
+.flashcard {
+    width: 300px;
+    height: 200px;
+    perspective: 1000px;
+    margin-bottom: 2rem;
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.6s;
+}
+
+.card-front {
+    background: linear-gradient(135deg, #1a365d, #2c5aa0);
+    color: white;
+}
+
+.card-back {
+    background: linear-gradient(135deg, #d4af37, #b8860b);
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.flashcard.flipped .card-front {
+    transform: rotateY(180deg);
+}
+
+.flashcard.flipped .card-back {
+    transform: rotateY(0deg);
+}
+
+.card-front h4, .card-back h4 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.card-front p, .card-back p {
+    font-size: 1.2rem;
+    font-family: 'Noto Sans Hebrew', serif;
+}
+
+.flashcard-controls {
+    display: flex;
+    gap: 1rem;
+}
+
+.card-btn {
+    padding: 10px 20px;
+    border: 2px solid #1a365d;
+    background: transparent;
+    color: #1a365d;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.card-btn.primary {
+    background: #1a365d;
+    color: white;
+}
+
+.card-btn:hover {
+    background: #1a365d;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Weekly Word */
+.weekly-word {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    border: 2px solid #d4af37;
+}
+
+.word-hebrew {
+    font-family: 'Noto Sans Hebrew', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 1rem;
+}
+
+.word-transliteration {
+    font-size: 1.5rem;
+    color: #2c5aa0;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.word-meaning {
+    font-size: 1.2rem;
+    color: #495057;
+    margin-bottom: 1.5rem;
+}
+
+.word-scripture {
+    font-style: italic;
+    color: #6c757d;
+    line-height: 1.8;
+}
+
+/* Names Section */
+.names-category {
+    margin-bottom: 3rem;
+}
+
+.names-category h3 {
+    color: #1a365d;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.names-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.name-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.name-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border-color: #d4af37;
+}
+
+.name-card .hebrew {
+    font-family: 'Noto Sans Hebrew', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.name-card .transliteration {
+    font-size: 1.2rem;
+    color: #2c5aa0;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.name-card .meaning {
+    color: #495057;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.name-card .scripture {
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Practice Section */
+.practice-modules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.practice-module {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.pronunciation-item, .verse-practice {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #d4af37;
+}
+
+.hebrew-text, .hebrew-verse {
+    font-family: 'Noto Sans Hebrew', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1a365d;
+    margin-right: 1rem;
+}
+
+.transliteration {
+    font-size: 1.1rem;
+    color: #2c5aa0;
+    font-weight: 500;
+    margin-right: 1rem;
+    flex-grow: 1;
+}
+
+.translation {
+    font-size: 1rem;
+    color: #495057;
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+.play-audio {
+    background: #d4af37;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.play-audio:hover {
+    background: #b8860b;
+    transform: scale(1.05);
+}
+
+/* Resources Section */
+.resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.resource-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #d4af37;
+}
+
+.resource-card h3 {
+    color: #1a365d;
+    margin-bottom: 1.5rem;
+}
+
+.resource-card ul {
+    list-style: none;
+}
+
+.resource-card li {
+    margin-bottom: 0.8rem;
+}
+
+.resource-link {
+    color: #2c5aa0;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.resource-link:hover {
+    color: #d4af37;
+}
+
+.devotional {
+    text-align: center;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 10px;
+    margin-top: 1rem;
+}
+
+.devotional-word {
+    font-family: 'Noto Sans Hebrew', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 0.5rem;
+}
+
+.devotional-transliteration {
+    font-size: 1.3rem;
+    color: #2c5aa0;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.devotional-meaning {
+    font-size: 1.1rem;
+    color: #495057;
+    margin-bottom: 1rem;
+}
+
+.devotional-scripture {
+    font-style: italic;
+    color: #6c757d;
+    line-height: 1.6;
+}
+
+/* Dashboard Section */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.progress-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-top: 4px solid #d4af37;
+}
+
+.progress-card h3 {
+    color: #1a365d;
+    margin-bottom: 1.5rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #d4af37, #b8860b);
+    transition: width 0.3s ease;
+}
+
+.streak-display, .xp-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.streak-number, .xp-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #d4af37;
+    margin-bottom: 0.5rem;
+}
+
+.streak-text, .xp-text {
+    font-size: 1.1rem;
+    color: #495057;
+    font-weight: 500;
+}
+
+.journal-entry textarea {
+    width: 100%;
+    height: 120px;
+    padding: 1rem;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+    margin-bottom: 1rem;
+}
+
+.journal-entry textarea:focus {
+    outline: none;
+    border-color: #d4af37;
+}
+
+.save-journal {
+    background: #1a365d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.save-journal:hover {
+    background: #2c5aa0;
+    transform: translateY(-2px);
+}
+
+/* Footer */
+.footer {
+    background: #1a365d;
+    color: white;
+    padding: 3rem 0 1rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h3, .footer-section h4 {
+    color: #d4af37;
+    margin-bottom: 1rem;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: #d4af37;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid #2c5aa0;
+    color: #ccc;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: rgba(26, 54, 93, 0.95);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        padding: 2rem 0;
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-menu li {
+        margin: 1rem 0;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-tagline {
+        font-size: 1.2rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .alphabet-grid {
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    }
+
+    .flashcard {
+        width: 280px;
+        height: 180px;
+    }
+
+    .practice-modules {
+        grid-template-columns: 1fr;
+    }
+
+    .pronunciation-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .hebrew-text, .hebrew-verse {
+        font-size: 1.3rem;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-tagline {
+        font-size: 1rem;
+    }
+
+    .flashcard {
+        width: 250px;
+        height: 160px;
+    }
+
+    .alphabet-card .hebrew {
+        font-size: 1.5rem;
+    }
+
+    .word-hebrew {
+        font-size: 2.5rem;
+    }
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Loading animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.lesson-module, .name-card, .resource-card, .progress-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Hebrew text styling */
+.hebrew-text, .hebrew-verse, .word-hebrew, .devotional-word, .name-card .hebrew, .alphabet-card .hebrew {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d4af37;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #b8860b;
+}
