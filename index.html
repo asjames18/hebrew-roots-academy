@@ -1,141 +1,474 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hebrew Roots Academy - Learn the Language of Covenant</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Frank+Ruhl+Libre:wght@400;700&family=Noto+Sans+Hebrew:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Hebrew Font Optimization -->
+    <style>
+        /* Hebrew font loading optimization */
+        .font-hebrew {
+            font-family: 'Noto Sans Hebrew', 'Arial Hebrew', 'Tahoma', 'Arial', sans-serif;
+            font-display: swap;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Ensure Hebrew text renders properly */
+        .hebrew-text {
+            direction: rtl;
+            unicode-bidi: bidi-override;
+            font-feature-settings: "liga" 1, "calt" 1;
+        }
+        
+        /* Loading state for Hebrew fonts */
+        .font-hebrew.loading {
+            font-family: 'Arial', sans-serif;
+            opacity: 0.7;
+        }
+        
+        /* Smooth font loading transition */
+        .font-hebrew {
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Loading states */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #D4AF37;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Smooth page transitions */
+        body {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        /* Enhanced loading animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: fadeInLeft 0.6s ease-out forwards;
+        }
+        
+        @keyframes fadeInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(20px);
+            animation: fadeInRight 0.6s ease-out forwards;
+        }
+        
+        @keyframes fadeInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            animation: scaleIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes scaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Pulse animation for interactive elements */
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+            }
+        }
+        
+        /* Shake animation for errors */
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        /* Bounce animation for success */
+        .bounce {
+            animation: bounce 0.6s ease-in-out;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        .dark .skeleton {
+            background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+            background-size: 200% 100%;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Smooth transitions for all interactive elements */
+        .smooth-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Hover effects */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Card flip animation */
+        .card-flip {
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+        
+        .card-flip.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            backface-visibility: hidden;
+        }
+        
+        .card-back {
+            transform: rotateY(180deg);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'frank': ['Frank Ruhl Libre', 'serif'],
+                        'hebrew': ['Noto Sans Hebrew', 'sans-serif']
+                    },
+                    colors: {
+                        'hebrew-gold': '#D4AF37',
+                        'hebrew-blue': '#1E3A8A',
+                        'hebrew-burgundy': '#7C2D12',
+                        'hebrew-cream': '#FEF7ED'
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
+<body class="bg-hebrew-cream dark:bg-gray-900 font-inter transition-colors duration-300">
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <h2>Hebrew Roots Academy</h2>
+    <nav class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <h2 class="text-2xl font-bold text-hebrew-blue font-frank">Hebrew Roots Academy</h2>
             </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#home" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#lessons" class="nav-link">Lessons</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#names" class="nav-link">Sacred Names</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#practice" class="nav-link">Practice</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#resources" class="nav-link">Resources</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#dashboard" class="nav-link">Dashboard</a>
-                </li>
-            </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="text-gray-700 dark:text-gray-300 hover:text-hebrew-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="#lessons" class="text-gray-700 dark:text-gray-300 hover:text-hebrew-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Lessons</a>
+                        <a href="#names" class="text-gray-700 dark:text-gray-300 hover:text-hebrew-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Sacred Names</a>
+                        <a href="#practice" class="text-gray-700 dark:text-gray-300 hover:text-hebrew-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Practice</a>
+                        <a href="#quiz" class="text-gray-700 dark:text-gray-300 hover:text-hebrew-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Quiz</a>
+                        <a href="#resources" class="text-gray-700 dark:text-gray-300 hover:text-hebrew-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Resources</a>
+                        <a href="#dashboard" class="text-gray-700 dark:text-gray-300 hover:text-hebrew-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Dashboard</a>
+                    </div>
+                </div>
+                
+                <!-- Search Bar -->
+                <div class="hidden md:block relative">
+                    <div class="relative">
+                        <input type="text" id="search-input" placeholder="Search Hebrew words..." 
+                               class="w-64 pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-hebrew-gold focus:border-transparent text-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                        <button id="clear-search" class="absolute inset-y-0 right-0 pr-3 flex items-center hidden">
+                            <svg class="h-5 w-5 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Search Results Dropdown -->
+                    <div id="search-results" class="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 hidden z-50 max-h-96 overflow-y-auto">
+                        <div id="search-results-content" class="p-2">
+                            <!-- Search results will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dark Mode Toggle -->
+                <div class="hidden md:block ml-4">
+                    <button id="dark-mode-toggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                        <svg id="sun-icon" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <svg id="moon-icon" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="md:hidden">
+                    <button type="button" id="mobile-menu-button" class="bg-hebrew-blue inline-flex items-center justify-center p-2 rounded-md text-white hover:text-hebrew-gold hover:bg-hebrew-burgundy focus:outline-none focus:ring-2 focus:ring-inset focus:ring-hebrew-gold transition-colors" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" id="menu-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" id="close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile menu -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-800 shadow-lg transition-colors duration-300">
+                    <a href="#home" class="text-gray-700 dark:text-gray-300 hover:text-hebrew-gold block px-4 py-3 rounded-md text-base font-medium transition-colors">Home</a>
+                    <a href="#lessons" class="text-gray-700 dark:text-gray-300 hover:text-hebrew-gold block px-4 py-3 rounded-md text-base font-medium transition-colors">Lessons</a>
+                    <a href="#names" class="text-gray-700 dark:text-gray-300 hover:text-hebrew-gold block px-4 py-3 rounded-md text-base font-medium transition-colors">Sacred Names</a>
+                    <a href="#practice" class="text-gray-700 dark:text-gray-300 hover:text-hebrew-gold block px-4 py-3 rounded-md text-base font-medium transition-colors">Practice</a>
+                    <a href="#quiz" class="text-gray-700 dark:text-gray-300 hover:text-hebrew-gold block px-4 py-3 rounded-md text-base font-medium transition-colors">Quiz</a>
+                    <a href="#resources" class="text-gray-700 dark:text-gray-300 hover:text-hebrew-gold block px-4 py-3 rounded-md text-base font-medium transition-colors">Resources</a>
+                    <a href="#dashboard" class="text-gray-700 dark:text-gray-300 hover:text-hebrew-gold block px-4 py-3 rounded-md text-base font-medium transition-colors">Dashboard</a>
+                    
+                    <!-- Mobile Dark Mode Toggle -->
+                    <div class="border-t border-gray-200 dark:border-gray-600 pt-3 mt-3">
+                        <button id="mobile-dark-mode-toggle" class="w-full flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-hebrew-gold transition-colors">
+                            <svg id="mobile-sun-icon" class="h-5 w-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
+                            <svg id="mobile-moon-icon" class="h-5 w-5 mr-3 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                            </svg>
+                            <span id="mobile-theme-text">Dark Mode</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-background">
-            <div class="hero-overlay"></div>
-        </div>
-        <div class="hero-content">
-            <h1 class="hero-title">Hebrew Roots Academy</h1>
-            <p class="hero-tagline">Learn the Language of Covenant. Reclaim the Tongue of the Prophets.</p>
-            <button class="cta-button" onclick="scrollToSection('lessons')">Start Learning Hebrew</button>
+    <section id="home" class="relative bg-gradient-to-br from-hebrew-blue via-hebrew-burgundy to-hebrew-gold min-h-screen flex items-center justify-center">
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        <div class="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white font-frank mb-4 sm:mb-6 leading-tight">
+                Hebrew Roots Academy
+            </h1>
+            <p class="text-lg sm:text-xl md:text-2xl text-gray-100 mb-6 sm:mb-8 font-inter px-2">
+                Learn the Language of Covenant. Reclaim the Tongue of the Prophets.
+            </p>
+            <button onclick="scrollToSection('lessons')" class="bg-hebrew-gold hover:bg-yellow-500 text-hebrew-blue font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-lg text-base sm:text-lg transition-all duration-300 transform hover:scale-105 shadow-lg w-full sm:w-auto">
+                Start Learning Hebrew
+            </button>
         </div>
     </section>
 
     <!-- Interactive Hebrew Lessons -->
-    <section id="lessons" class="lessons-section">
-        <div class="container">
-            <h2 class="section-title">Interactive Hebrew Lessons</h2>
+    <section id="lessons" class="py-20 bg-white dark:bg-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-hebrew-blue font-frank mb-16 fade-in-up">Interactive Hebrew Lessons</h2>
             
             <!-- Alphabet Practice -->
-            <div class="lesson-module">
-                <h3>Hebrew Alphabet (Aleph to Tav)</h3>
-                <div class="alphabet-grid" id="alphabetGrid">
+            <div class="mb-16 fade-in-left">
+                <h3 class="text-2xl font-bold text-hebrew-burgundy mb-8 font-frank">Hebrew Alphabet (Aleph to Tav)</h3>
+                <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3 sm:gap-4" id="alphabetGrid">
                     <!-- Alphabet cards will be generated by JavaScript -->
                 </div>
             </div>
 
             <!-- Sacred Names Flashcards -->
-            <div class="lesson-module">
-                <h3>Sacred Names Flashcards</h3>
-                <div class="flashcard-container">
-                    <div class="flashcard" id="currentCard">
-                        <div class="card-front">
-                            <h4 id="cardTitle">YAHUAH</h4>
-                            <p id="cardHebrew">יהוה</p>
+            <div class="mb-16 fade-in-right">
+                <h3 class="text-2xl font-bold text-hebrew-burgundy mb-8 font-frank">Sacred Names Flashcards</h3>
+                
+                <!-- Study Mode Selector -->
+                <div class="flex justify-center mb-6">
+                    <div class="bg-hebrew-cream rounded-lg p-2 flex space-x-2">
+                        <button id="studyMode" class="px-4 py-2 rounded-md bg-hebrew-gold text-hebrew-blue font-bold text-sm transition-colors">Study</button>
+                        <button id="quizMode" class="px-4 py-2 rounded-md bg-gray-200 text-gray-700 font-bold text-sm transition-colors">Quiz</button>
+                        <button id="reviewMode" class="px-4 py-2 rounded-md bg-gray-200 text-gray-700 font-bold text-sm transition-colors">Review</button>
                         </div>
-                        <div class="card-back">
-                            <h4 id="cardMeaning">The Most High</h4>
-                            <p id="cardDescription">The sacred name of the Creator, used throughout Scripture</p>
                         </div>
+
+                <!-- Progress Indicator -->
+                <div class="text-center mb-4">
+                    <span id="cardCounter" class="text-sm text-gray-600">Card 1 of 8</span>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                        <div id="cardProgress" class="bg-hebrew-gold h-2 rounded-full transition-all duration-300" style="width: 12.5%"></div>
                     </div>
-                    <div class="flashcard-controls">
-                        <button id="prevCard" class="card-btn">Previous</button>
-                        <button id="flipCard" class="card-btn primary">Flip Card</button>
-                        <button id="nextCard" class="card-btn">Next</button>
+                    </div>
+
+                <div class="max-w-md mx-auto px-4 sm:px-0">
+                    <div class="bg-white dark:bg-gray-700 rounded-lg shadow-xl p-6 sm:p-8 mb-6 min-h-64 flex flex-col justify-center items-center relative overflow-hidden transition-colors duration-300" id="currentCard">
+                        <!-- Card Front -->
+                        <div class="card-front text-center transition-all duration-500 transform" id="cardFront">
+                            <h4 id="cardTitle" class="text-2xl font-bold text-hebrew-blue mb-4 font-frank">YAHUAH</h4>
+                            <p id="cardHebrew" class="text-4xl font-hebrew text-hebrew-burgundy">יהוה</p>
+                        </div>
+                        
+                        <!-- Card Back -->
+                        <div class="card-back text-center transition-all duration-500 transform hidden" id="cardBack">
+                            <h4 id="cardMeaning" class="text-2xl font-bold text-hebrew-gold mb-4 font-frank">The Most High</h4>
+                            <p id="cardDescription" class="text-gray-700">The sacred name of the Creator, used throughout Scripture</p>
+                        </div>
+
+                        <!-- Quiz Mode Elements -->
+                        <div id="quizElements" class="hidden">
+                            <div class="text-center mb-6">
+                                <p class="text-lg text-gray-700 mb-4">What does this Hebrew name mean?</p>
+                                <div class="space-y-2" id="quizOptions">
+                                    <!-- Options will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Animation Overlay -->
+                        <div id="cardOverlay" class="absolute inset-0 bg-hebrew-gold opacity-0 pointer-events-none transition-opacity duration-300"></div>
+                    </div>
+
+                    <!-- Control Buttons -->
+                    <div class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4 mb-4">
+                        <button id="prevCard" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-4 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto">Previous</button>
+                        <button id="flipCard" class="bg-hebrew-gold hover:bg-yellow-500 text-hebrew-blue font-bold py-3 px-4 rounded transition-colors w-full sm:w-auto">Flip Card</button>
+                        <button id="nextCard" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-4 rounded transition-colors w-full sm:w-auto">Next</button>
+                    </div>
+
+                    <!-- Quiz Mode Buttons -->
+                    <div id="quizButtons" class="hidden flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
+                        <button id="checkAnswer" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded transition-colors w-full sm:w-auto">Check Answer</button>
+                        <button id="skipQuestion" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded transition-colors w-full sm:w-auto">Skip</button>
+                    </div>
+
+                    <!-- Score Display (Quiz Mode) -->
+                    <div id="scoreDisplay" class="hidden text-center mt-4">
+                        <div class="bg-hebrew-cream rounded-lg p-4">
+                            <h4 class="text-lg font-bold text-hebrew-blue mb-2">Quiz Complete!</h4>
+                            <p id="finalScore" class="text-2xl font-bold text-hebrew-gold">0/8</p>
+                            <button id="restartQuiz" class="mt-2 bg-hebrew-gold hover:bg-yellow-500 text-hebrew-blue font-bold py-2 px-4 rounded transition-colors">Restart Quiz</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Weekly Hebrew Word -->
-            <div class="lesson-module">
-                <h3>Weekly Hebrew Word</h3>
-                <div class="weekly-word">
-                    <div class="word-hebrew">שָׁלוֹם</div>
-                    <div class="word-transliteration">Shalom</div>
-                    <div class="word-meaning">Peace, completeness, wholeness</div>
-                    <div class="word-scripture">"And YAHUAH spoke to Moses, saying, 'Speak to Aaron and his sons, saying, "Thus you shall bless the children of Yashar'el, saying to them: 'YAHUAH bless you and keep you; YAHUAH make His face shine upon you, and be gracious to you; YAHUAH lift up His countenance upon you, and give you shalom."'" - Numbers 6:22-26</div>
+            <div class="bg-hebrew-cream rounded-lg p-8">
+                <h3 class="text-2xl font-bold text-hebrew-burgundy mb-6 font-frank">Weekly Hebrew Word</h3>
+                <div class="text-center">
+                    <div class="text-6xl font-hebrew text-hebrew-blue mb-4">שָׁלוֹם</div>
+                    <div class="text-2xl font-bold text-hebrew-gold mb-2 font-frank">Shalom</div>
+                    <div class="text-lg text-gray-700 mb-4">Peace, completeness, wholeness</div>
+                    <div class="text-sm text-gray-600 italic max-w-4xl mx-auto">"And YAHUAH spoke to Moses, saying, 'Speak to Aaron and his sons, saying, "Thus you shall bless the children of Yashar'el, saying to them: 'YAHUAH bless you and keep you; YAHUAH make His face shine upon you, and be gracious to you; YAHUAH lift up His countenance upon you, and give you shalom."'" - Numbers 6:22-26</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Learn the Names Section -->
-    <section id="names" class="names-section">
-        <div class="container">
-            <h2 class="section-title">Learn the Sacred Names</h2>
+    <section id="names" class="py-20 bg-hebrew-cream dark:bg-gray-900 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-hebrew-blue font-frank mb-16">Learn the Sacred Names</h2>
             
             <!-- Names of YAH -->
-            <div class="names-category">
-                <h3>Names of YAH</h3>
-                <div class="names-grid" id="namesOfYah">
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold text-hebrew-burgundy mb-6 font-frank">Names of YAH</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="namesOfYah">
                     <!-- Names will be populated by JavaScript -->
                 </div>
             </div>
 
             <!-- Prophets -->
-            <div class="names-category">
-                <h3>Prophets</h3>
-                <div class="names-grid" id="prophets">
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold text-hebrew-burgundy mb-6 font-frank">Prophets</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="prophets">
                     <!-- Prophets will be populated by JavaScript -->
                 </div>
             </div>
 
             <!-- Patriarchs -->
-            <div class="names-category">
-                <h3>Patriarchs</h3>
-                <div class="names-grid" id="patriarchs">
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold text-hebrew-burgundy mb-6 font-frank">Patriarchs</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="patriarchs">
                     <!-- Patriarchs will be populated by JavaScript -->
                 </div>
             </div>
 
             <!-- Tribes -->
-            <div class="names-category">
-                <h3>Twelve Tribes</h3>
-                <div class="names-grid" id="tribes">
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold text-hebrew-burgundy mb-6 font-frank">Twelve Tribes</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="tribes">
                     <!-- Tribes will be populated by JavaScript -->
                 </div>
             </div>
@@ -143,41 +476,47 @@
     </section>
 
     <!-- Video & Audio Practice -->
-    <section id="practice" class="practice-section">
-        <div class="container">
-            <h2 class="section-title">Pronunciation Practice</h2>
+    <section id="practice" class="py-20 bg-white dark:bg-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-hebrew-blue font-frank mb-16">Pronunciation Practice</h2>
             
-            <div class="practice-modules">
-                <div class="practice-module">
-                    <h3>Sacred Names Pronunciation</h3>
-                    <div class="pronunciation-guide">
-                        <div class="pronunciation-item">
-                            <span class="hebrew-text">יהוה</span>
-                            <span class="transliteration">YAHUAH</span>
-                            <button class="play-audio" data-word="YAHUAH">🔊 Play</button>
+            <div class="grid lg:grid-cols-2 gap-8 lg:gap-12">
+                <div class="bg-hebrew-cream dark:bg-gray-700 rounded-lg p-6 sm:p-8 transition-colors duration-300">
+                    <h3 class="text-2xl font-bold text-hebrew-burgundy mb-6 font-frank">Sacred Names Pronunciation</h3>
+                    <div class="space-y-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-white dark:bg-gray-600 rounded-lg p-4 shadow-md space-y-2 sm:space-y-0 transition-colors duration-300">
+                            <div class="flex-1">
+                                <span class="text-2xl font-hebrew text-hebrew-blue block">יהוה</span>
+                                <span class="text-lg font-bold text-hebrew-gold">YAHUAH</span>
+                            </div>
+                            <button class="bg-hebrew-gold hover:bg-yellow-500 text-hebrew-blue font-bold py-2 px-4 rounded transition-colors w-full sm:w-auto" data-word="YAHUAH">🔊 Play</button>
                         </div>
-                        <div class="pronunciation-item">
-                            <span class="hebrew-text">רוח הקודש</span>
-                            <span class="transliteration">RUACH HAQODESH</span>
-                            <button class="play-audio" data-word="RUACH_HAQODESH">🔊 Play</button>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-white dark:bg-gray-600 rounded-lg p-4 shadow-md space-y-2 sm:space-y-0 transition-colors duration-300">
+                            <div class="flex-1">
+                                <span class="text-2xl font-hebrew text-hebrew-blue block">רוח הקודש</span>
+                                <span class="text-lg font-bold text-hebrew-gold">RUACH HAQODESH</span>
+                            </div>
+                            <button class="bg-hebrew-gold hover:bg-yellow-500 text-hebrew-blue font-bold py-2 px-4 rounded transition-colors w-full sm:w-auto" data-word="RUACH_HAQODESH">🔊 Play</button>
                         </div>
-                        <div class="pronunciation-item">
-                            <span class="hebrew-text">יהושע המשיח</span>
-                            <span class="transliteration">YAHUSHA HA'MASHIACH</span>
-                            <button class="play-audio" data-word="YAHUSHA_MASHIACH">🔊 Play</button>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-white dark:bg-gray-600 rounded-lg p-4 shadow-md space-y-2 sm:space-y-0 transition-colors duration-300">
+                            <div class="flex-1">
+                                <span class="text-2xl font-hebrew text-hebrew-blue block">יהושע המשיח</span>
+                                <span class="text-lg font-bold text-hebrew-gold">YAHUSHA HA'MASHIACH</span>
+                            </div>
+                            <button class="bg-hebrew-gold hover:bg-yellow-500 text-hebrew-blue font-bold py-2 px-4 rounded transition-colors w-full sm:w-auto" data-word="YAHUSHA_MASHIACH">🔊 Play</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="practice-module">
-                    <h3>Torah Reading Practice</h3>
-                    <div class="reading-practice">
-                        <div class="verse-practice">
-                            <h4>Genesis 1:1</h4>
-                            <div class="hebrew-verse">בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ</div>
-                            <div class="transliteration">Bereishit bara Elohim et hashamayim ve'et ha'aretz</div>
-                            <div class="translation">In the beginning, Elohim created the heavens and the earth</div>
-                            <button class="play-audio" data-word="GENESIS_1_1">🔊 Play</button>
+                <div class="bg-hebrew-cream dark:bg-gray-700 rounded-lg p-6 sm:p-8 transition-colors duration-300">
+                    <h3 class="text-2xl font-bold text-hebrew-burgundy mb-6 font-frank">Torah Reading Practice</h3>
+                    <div class="bg-white dark:bg-gray-600 rounded-lg p-4 sm:p-6 shadow-md transition-colors duration-300">
+                        <h4 class="text-xl font-bold text-hebrew-blue mb-4 font-frank">Genesis 1:1</h4>
+                        <div class="text-2xl sm:text-3xl font-hebrew text-hebrew-burgundy mb-4 text-center leading-relaxed">בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ</div>
+                        <div class="text-base sm:text-lg text-hebrew-gold mb-4 text-center font-bold">Bereishit bara Elohim et hashamayim ve'et ha'aretz</div>
+                        <div class="text-gray-700 dark:text-gray-300 mb-6 text-center italic text-sm sm:text-base">In the beginning, Elohim created the heavens and the earth</div>
+                        <div class="text-center">
+                            <button class="bg-hebrew-gold hover:bg-yellow-500 text-hebrew-blue font-bold py-2 px-6 rounded transition-colors" data-word="GENESIS_1_1">🔊 Play</button>
                         </div>
                     </div>
                 </div>
@@ -186,79 +525,154 @@
     </section>
 
     <!-- Remnant Resource Hub -->
-    <section id="resources" class="resources-section">
-        <div class="container">
-            <h2 class="section-title">Remnant Resource Hub</h2>
+    <section id="resources" class="py-20 bg-hebrew-cream dark:bg-gray-900 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-hebrew-blue font-frank mb-16">Remnant Resource Hub</h2>
             
-            <div class="resources-grid">
-                <div class="resource-card">
-                    <h3>Downloadable PDFs</h3>
-                    <ul>
-                        <li><a href="#" class="resource-link">Hebrew Name Charts</a></li>
-                        <li><a href="#" class="resource-link">Sacred Calendar Terms</a></li>
-                        <li><a href="#" class="resource-link">Pronunciation Guide</a></li>
-                        <li><a href="#" class="resource-link">Torah Vocabulary List</a></li>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-hebrew-burgundy mb-4 font-frank">Downloadable PDFs</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-hebrew-blue hover:text-hebrew-gold transition-colors block py-1">Hebrew Name Charts</a></li>
+                        <li><a href="#" class="text-hebrew-blue hover:text-hebrew-gold transition-colors block py-1">Sacred Calendar Terms</a></li>
+                        <li><a href="#" class="text-hebrew-blue hover:text-hebrew-gold transition-colors block py-1">Pronunciation Guide</a></li>
+                        <li><a href="#" class="text-hebrew-blue hover:text-hebrew-gold transition-colors block py-1">Torah Vocabulary List</a></li>
                     </ul>
                 </div>
 
-                <div class="resource-card">
-                    <h3>External Resources</h3>
-                    <ul>
-                        <li><a href="https://www.blueletterbible.org" target="_blank" class="resource-link">Blue Letter Bible</a></li>
-                        <li><a href="https://biblehub.com" target="_blank" class="resource-link">Bible Hub</a></li>
-                        <li><a href="https://www.ancient-hebrew.org" target="_blank" class="resource-link">Ancient Hebrew Research Center</a></li>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-hebrew-burgundy mb-4 font-frank">External Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.blueletterbible.org" target="_blank" class="text-hebrew-blue hover:text-hebrew-gold transition-colors block py-1">Blue Letter Bible</a></li>
+                        <li><a href="https://biblehub.com" target="_blank" class="text-hebrew-blue hover:text-hebrew-gold transition-colors block py-1">Bible Hub</a></li>
+                        <li><a href="https://www.ancient-hebrew.org" target="_blank" class="text-hebrew-blue hover:text-hebrew-gold transition-colors block py-1">Ancient Hebrew Research Center</a></li>
                     </ul>
                 </div>
 
-                <div class="resource-card">
-                    <h3>Word of Power Devotional</h3>
-                    <div class="devotional">
-                        <h4>This Week's Focus</h4>
-                        <div class="devotional-word">אֱמוּנָה</div>
-                        <div class="devotional-transliteration">Emunah</div>
-                        <div class="devotional-meaning">Faith, faithfulness, trust</div>
-                        <div class="devotional-scripture">"But the righteous shall live by his faith" - Habakkuk 2:4</div>
+                <div class="bg-white rounded-lg shadow-lg p-6 md:col-span-2 lg:col-span-1">
+                    <h3 class="text-xl font-bold text-hebrew-burgundy mb-4 font-frank">Word of Power Devotional</h3>
+                    <div class="text-center">
+                        <h4 class="text-lg font-bold text-hebrew-blue mb-4">This Week's Focus</h4>
+                        <div class="text-4xl font-hebrew text-hebrew-burgundy mb-2">אֱמוּנָה</div>
+                        <div class="text-xl font-bold text-hebrew-gold mb-2">Emunah</div>
+                        <div class="text-gray-700 mb-4">Faith, faithfulness, trust</div>
+                        <div class="text-sm text-gray-600 italic">"But the righteous shall live by his faith" - Habakkuk 2:4</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- User Progress Dashboard -->
-    <section id="dashboard" class="dashboard-section">
-        <div class="container">
-            <h2 class="section-title">Your Learning Journey</h2>
+    <!-- Quiz System -->
+    <section id="quiz" class="py-20 bg-hebrew-cream dark:bg-gray-900 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-hebrew-blue font-frank mb-16 fade-in-up">Hebrew Learning Quizzes</h2>
             
-            <div class="dashboard-grid">
-                <div class="progress-card">
-                    <h3>Vocabulary Progress</h3>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 35%"></div>
-                    </div>
-                    <p>35 words learned</p>
+            <!-- Quiz Type Selector -->
+            <div class="flex justify-center mb-12">
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-2 flex flex-wrap justify-center gap-2">
+                    <button id="alphabet-quiz-btn" class="px-4 py-2 rounded-md bg-hebrew-gold text-hebrew-blue font-bold text-sm transition-colors">Alphabet Quiz</button>
+                    <button id="names-quiz-btn" class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold text-sm transition-colors">Names Quiz</button>
+                    <button id="matching-quiz-btn" class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold text-sm transition-colors">Matching Quiz</button>
+                    <button id="fill-blank-quiz-btn" class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold text-sm transition-colors">Fill in Blank</button>
+                </div>
+            </div>
+
+            <!-- Quiz Container -->
+            <div id="quiz-container" class="max-w-4xl mx-auto">
+                <!-- Quiz Instructions -->
+                <div id="quiz-instructions" class="text-center mb-8">
+                    <h3 class="text-2xl font-bold text-hebrew-burgundy mb-4 font-frank">Select a Quiz Type to Begin</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Test your Hebrew knowledge with interactive quizzes</p>
                 </div>
 
-                <div class="progress-card">
-                    <h3>Daily Streak</h3>
-                    <div class="streak-display">
-                        <span class="streak-number">7</span>
-                        <span class="streak-text">days</span>
+                <!-- Quiz Progress -->
+                <div id="quiz-progress" class="hidden mb-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <span id="quiz-progress-text" class="text-sm text-gray-600 dark:text-gray-400">Question 1 of 10</span>
+                        <span id="quiz-score" class="text-sm font-bold text-hebrew-gold">Score: 0</span>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                        <div id="quiz-progress-bar" class="bg-hebrew-gold h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
                     </div>
                 </div>
 
-                <div class="progress-card">
-                    <h3>XP Points</h3>
-                    <div class="xp-display">
-                        <span class="xp-number">1,250</span>
-                        <span class="xp-text">points</span>
+                <!-- Quiz Question -->
+                <div id="quiz-question" class="hidden bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8 mb-6">
+                    <div id="question-content">
+                        <!-- Question content will be populated by JavaScript -->
                     </div>
                 </div>
 
-                <div class="progress-card">
-                    <h3>Learning Journal</h3>
-                    <div class="journal-entry">
-                        <textarea placeholder="What is YAH teaching you today?" id="journalText"></textarea>
-                        <button class="save-journal">Save Entry</button>
+                <!-- Quiz Controls -->
+                <div id="quiz-controls" class="hidden flex justify-center space-x-4">
+                    <button id="submit-answer" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                        Submit Answer
+                    </button>
+                    <button id="skip-question" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded transition-colors">
+                        Skip
+                    </button>
+                    <button id="next-question" class="bg-hebrew-gold hover:bg-yellow-500 text-hebrew-blue font-bold py-3 px-6 rounded transition-colors hidden">
+                        Next Question
+                    </button>
+                </div>
+
+                <!-- Quiz Results -->
+                <div id="quiz-results" class="hidden text-center">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8">
+                        <h3 class="text-3xl font-bold text-hebrew-blue mb-4 font-frank">Quiz Complete!</h3>
+                        <div id="final-score" class="text-4xl font-bold text-hebrew-gold mb-4">0/10</div>
+                        <div id="score-message" class="text-lg text-gray-600 dark:text-gray-400 mb-6">Great job!</div>
+                        <div class="space-y-4">
+                            <button id="restart-quiz" class="bg-hebrew-gold hover:bg-yellow-500 text-hebrew-blue font-bold py-3 px-6 rounded transition-colors mr-4">
+                                Try Again
+                            </button>
+                            <button id="new-quiz" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded transition-colors">
+                                New Quiz
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- User Progress Dashboard -->
+    <section id="dashboard" class="py-20 bg-white dark:bg-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-hebrew-blue font-frank mb-16">Your Learning Journey</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-hebrew-cream rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-hebrew-burgundy mb-4 font-frank">Vocabulary Progress</h3>
+                    <div class="w-full bg-gray-200 rounded-full h-4 mb-4">
+                        <div class="bg-hebrew-gold h-4 rounded-full transition-all duration-500" style="width: 35%"></div>
+                    </div>
+                    <p class="text-gray-700 font-semibold">35 words learned</p>
+                </div>
+
+                <div class="bg-hebrew-cream rounded-lg shadow-lg p-6 text-center">
+                    <h3 class="text-xl font-bold text-hebrew-burgundy mb-4 font-frank">Daily Streak</h3>
+                    <div class="flex flex-col items-center">
+                        <span class="text-4xl font-bold text-hebrew-gold">7</span>
+                        <span class="text-gray-700 font-semibold">days</span>
+                    </div>
+                </div>
+
+                <div class="bg-hebrew-cream rounded-lg shadow-lg p-6 text-center">
+                    <h3 class="text-xl font-bold text-hebrew-burgundy mb-4 font-frank">XP Points</h3>
+                    <div class="flex flex-col items-center">
+                        <span class="text-4xl font-bold text-hebrew-gold">1,250</span>
+                        <span class="text-gray-700 font-semibold">points</span>
+                    </div>
+                </div>
+
+                <div class="bg-hebrew-cream rounded-lg shadow-lg p-6 md:col-span-2 lg:col-span-1">
+                    <h3 class="text-xl font-bold text-hebrew-burgundy mb-4 font-frank">Learning Journal</h3>
+                    <div class="space-y-4">
+                        <textarea placeholder="What is YAH teaching you today?" id="journalText" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hebrew-gold focus:border-transparent resize-none" rows="4"></textarea>
+                        <button class="w-full bg-hebrew-gold hover:bg-yellow-500 text-hebrew-blue font-bold py-2 px-4 rounded transition-colors">Save Entry</button>
                     </div>
                 </div>
             </div>
@@ -266,34 +680,1672 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Hebrew Roots Academy</h3>
-                    <p>Reclaiming the sacred language of our ancestors</p>
+    <footer class="bg-hebrew-blue text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold font-frank mb-4">Hebrew Roots Academy</h3>
+                    <p class="text-gray-300">Reclaiming the sacred language of our ancestors</p>
                 </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#lessons">Lessons</a></li>
-                        <li><a href="#names">Sacred Names</a></li>
-                        <li><a href="#practice">Practice</a></li>
-                        <li><a href="#resources">Resources</a></li>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#lessons" class="text-gray-300 hover:text-hebrew-gold transition-colors">Lessons</a></li>
+                        <li><a href="#names" class="text-gray-300 hover:text-hebrew-gold transition-colors">Sacred Names</a></li>
+                        <li><a href="#practice" class="text-gray-300 hover:text-hebrew-gold transition-colors">Practice</a></li>
+                        <li><a href="#resources" class="text-gray-300 hover:text-hebrew-gold transition-colors">Resources</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <p>For questions about Hebrew learning</p>
-                    <p>Email: learn@hebrewrootsacademy.com</p>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact</h4>
+                    <p class="text-gray-300 mb-2">For questions about Hebrew learning</p>
+                    <p class="text-hebrew-gold">learn@hebrewrootsacademy.com</p>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Hebrew Roots Academy. All rights reserved.</p>
+            <div class="border-t border-gray-600 mt-8 pt-8 text-center">
+                <p class="text-gray-300">&copy; 2024 Hebrew Roots Academy. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Smooth scrolling function
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Mobile menu functionality
+        function initMobileMenu() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    const isHidden = mobileMenu.classList.contains('hidden');
+                    
+                    if (isHidden) {
+                        // Show menu
+                        mobileMenu.classList.remove('hidden');
+                        menuIcon.classList.add('hidden');
+                        closeIcon.classList.remove('hidden');
+                        mobileMenuButton.setAttribute('aria-expanded', 'true');
+                    } else {
+                        // Hide menu
+                        mobileMenu.classList.add('hidden');
+                        menuIcon.classList.remove('hidden');
+                        closeIcon.classList.add('hidden');
+                        mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu when clicking on links
+                mobileMenuLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.add('hidden');
+                        menuIcon.classList.remove('hidden');
+                        closeIcon.classList.add('hidden');
+                        mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    });
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                        mobileMenu.classList.add('hidden');
+                        menuIcon.classList.remove('hidden');
+                        closeIcon.classList.add('hidden');
+                        mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+        }
+
+        // Progress tracking functionality
+        function initProgressTracking() {
+            // Progress data structure
+            const progressData = {
+                vocabulary: {
+                    learned: 0,
+                    total: 50,
+                    words: []
+                },
+                alphabet: {
+                    learned: 0,
+                    total: 22,
+                    letters: []
+                },
+                names: {
+                    learned: 0,
+                    total: 16,
+                    names: []
+                },
+                streak: {
+                    current: 0,
+                    longest: 0,
+                    lastVisit: null
+                },
+                xp: 0,
+                level: 1,
+                achievements: []
+            };
+
+            // Load progress from localStorage
+            function loadProgress() {
+                const saved = localStorage.getItem('hebrewRootsProgress');
+                if (saved) {
+                    return { ...progressData, ...JSON.parse(saved) };
+                }
+                return progressData;
+            }
+
+            // Save progress to localStorage
+            function saveProgress(progress) {
+                localStorage.setItem('hebrewRootsProgress', JSON.stringify(progress));
+            }
+
+            // Update progress
+            function updateProgress(type, item, points = 10) {
+                const progress = loadProgress();
+                
+                if (type === 'vocabulary' && !progress.vocabulary.words.includes(item)) {
+                    progress.vocabulary.words.push(item);
+                    progress.vocabulary.learned = progress.vocabulary.words.length;
+                    progress.xp += points;
+                } else if (type === 'alphabet' && !progress.alphabet.letters.includes(item)) {
+                    progress.alphabet.letters.push(item);
+                    progress.alphabet.learned = progress.alphabet.letters.length;
+                    progress.xp += points;
+                } else if (type === 'names' && !progress.names.names.includes(item)) {
+                    progress.names.names.push(item);
+                    progress.names.learned = progress.names.names.length;
+                    progress.xp += points;
+                }
+
+                // Update level based on XP
+                progress.level = Math.floor(progress.xp / 100) + 1;
+
+                // Update streak
+                const today = new Date().toDateString();
+                if (progress.streak.lastVisit !== today) {
+                    const yesterday = new Date();
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    const yesterdayStr = yesterday.toDateString();
+                    
+                    if (progress.streak.lastVisit === yesterdayStr) {
+                        progress.streak.current += 1;
+                    } else {
+                        progress.streak.current = 1;
+                    }
+                    
+                    progress.streak.lastVisit = today;
+                    progress.streak.longest = Math.max(progress.streak.current, progress.streak.longest);
+                }
+
+                saveProgress(progress);
+                updateProgressDisplay(progress);
+                return progress;
+            }
+
+            // Update progress display
+            function updateProgressDisplay(progress) {
+                // Update vocabulary progress
+                const vocabProgress = document.querySelector('.progress-fill');
+                if (vocabProgress) {
+                    const percentage = (progress.vocabulary.learned / progress.vocabulary.total) * 100;
+                    vocabProgress.style.width = `${percentage}%`;
+                }
+
+                const vocabText = document.querySelector('.progress-card p');
+                if (vocabText) {
+                    vocabText.textContent = `${progress.vocabulary.learned} words learned`;
+                }
+
+                // Update streak display
+                const streakNumber = document.querySelector('.streak-number');
+                if (streakNumber) {
+                    streakNumber.textContent = progress.streak.current;
+                }
+
+                // Update XP display
+                const xpNumber = document.querySelector('.xp-number');
+                if (xpNumber) {
+                    xpNumber.textContent = progress.xp.toLocaleString();
+                }
+
+                // Update level display (add if not exists)
+                let levelDisplay = document.querySelector('.level-display');
+                if (!levelDisplay) {
+                    const xpCard = document.querySelector('.xp-display').parentElement;
+                    levelDisplay = document.createElement('div');
+                    levelDisplay.className = 'level-display text-center mt-2';
+                    xpCard.appendChild(levelDisplay);
+                }
+                levelDisplay.innerHTML = `
+                    <div class="text-sm text-gray-600">Level</div>
+                    <div class="text-xl font-bold text-hebrew-gold">${progress.level}</div>
+                `;
+            }
+
+            // Track interactions
+            function trackInteraction(type, item) {
+                updateProgress(type, item);
+            }
+
+            // Initialize progress tracking
+            function init() {
+                const progress = loadProgress();
+                updateProgressDisplay(progress);
+
+                // Track alphabet card clicks
+                document.addEventListener('click', function(e) {
+                    const alphabetCard = e.target.closest('.bg-white.rounded-lg.shadow-md');
+                    if (alphabetCard && alphabetCard.closest('#alphabetGrid')) {
+                        const letter = alphabetCard.querySelector('.text-3xl.font-hebrew')?.textContent;
+                        if (letter) {
+                            trackInteraction('alphabet', letter);
+                        }
+                    }
+                });
+
+                // Track name card clicks
+                document.addEventListener('click', function(e) {
+                    const nameCard = e.target.closest('.bg-white.rounded-lg.shadow-md');
+                    if (nameCard && (nameCard.closest('#namesOfYah') || nameCard.closest('#prophets') || 
+                                   nameCard.closest('#patriarchs') || nameCard.closest('#tribes'))) {
+                        const name = nameCard.querySelector('.text-lg.font-bold.text-hebrew-gold')?.textContent;
+                        if (name) {
+                            trackInteraction('names', name);
+                        }
+                    }
+                });
+
+                // Track flashcard interactions
+                const flipCard = document.getElementById('flipCard');
+                if (flipCard) {
+                    flipCard.addEventListener('click', function() {
+                        const cardTitle = document.getElementById('cardTitle')?.textContent;
+                        if (cardTitle) {
+                            trackInteraction('vocabulary', cardTitle);
+                        }
+                    });
+                }
+
+                // Track audio button clicks
+                document.addEventListener('click', function(e) {
+                    if (e.target.closest('.play-audio')) {
+                        const word = e.target.closest('.play-audio').getAttribute('data-word');
+                        if (word) {
+                            trackInteraction('vocabulary', word);
+                        }
+                    }
+                });
+            }
+
+            // Public API
+            window.progressTracker = {
+                update: updateProgress,
+                track: trackInteraction,
+                getProgress: loadProgress,
+                reset: function() {
+                    localStorage.removeItem('hebrewRootsProgress');
+                    init();
+                }
+            };
+
+            init();
+        }
+
+        // Enhanced Flashcard functionality
+        function initEnhancedFlashcards() {
+            // Flashcard data
+            const flashcardData = [
+                { hebrew: 'יהוה', transliteration: 'YAHUAH', meaning: 'The Most High', description: 'The sacred name of the Creator, used throughout Scripture' },
+                { hebrew: 'אלוהים', transliteration: 'ELOHIM', meaning: 'God, Creator', description: 'The plural form of El, meaning the mighty one' },
+                { hebrew: 'אדוני', transliteration: 'ADONAI', meaning: 'Lord, Master', description: 'A title of respect and authority' },
+                { hebrew: 'שדי', transliteration: 'SHADDAI', meaning: 'Almighty', description: 'The all-sufficient one, the breasted one' },
+                { hebrew: 'משה', transliteration: 'MOSHE', meaning: 'Moses', description: 'Drawn out of the water, the great lawgiver' },
+                { hebrew: 'אליהו', transliteration: 'ELIYAHU', meaning: 'Elijah', description: 'My God is YAHUAH, the prophet of fire' },
+                { hebrew: 'אברהם', transliteration: 'AVRAHAM', meaning: 'Abraham', description: 'Father of many nations, the patriarch' },
+                { hebrew: 'יצחק', transliteration: 'YITZCHAK', meaning: 'Isaac', description: 'He laughs, the son of promise' }
+            ];
+
+            let currentCardIndex = 0;
+            let currentMode = 'study';
+            let isFlipped = false;
+            let quizScore = 0;
+            let quizAnswers = [];
+            let selectedAnswer = null;
+
+            // Get DOM elements
+            const cardFront = document.getElementById('cardFront');
+            const cardBack = document.getElementById('cardBack');
+            const cardTitle = document.getElementById('cardTitle');
+            const cardHebrew = document.getElementById('cardHebrew');
+            const cardMeaning = document.getElementById('cardMeaning');
+            const cardDescription = document.getElementById('cardDescription');
+            const cardCounter = document.getElementById('cardCounter');
+            const cardProgress = document.getElementById('cardProgress');
+            const cardOverlay = document.getElementById('cardOverlay');
+            const quizElements = document.getElementById('quizElements');
+            const quizOptions = document.getElementById('quizOptions');
+            const quizButtons = document.getElementById('quizButtons');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const finalScore = document.getElementById('finalScore');
+
+            // Mode buttons
+            const studyModeBtn = document.getElementById('studyMode');
+            const quizModeBtn = document.getElementById('quizMode');
+            const reviewModeBtn = document.getElementById('reviewMode');
+
+            // Control buttons
+            const prevCardBtn = document.getElementById('prevCard');
+            const flipCardBtn = document.getElementById('flipCard');
+            const nextCardBtn = document.getElementById('nextCard');
+            const checkAnswerBtn = document.getElementById('checkAnswer');
+            const skipQuestionBtn = document.getElementById('skipQuestion');
+            const restartQuizBtn = document.getElementById('restartQuiz');
+
+            // Initialize flashcards
+            function init() {
+                updateCardDisplay();
+                setupEventListeners();
+            }
+
+            // Setup event listeners
+            function setupEventListeners() {
+                // Mode buttons
+                studyModeBtn.addEventListener('click', () => setMode('study'));
+                quizModeBtn.addEventListener('click', () => setMode('quiz'));
+                reviewModeBtn.addEventListener('click', () => setMode('review'));
+
+                // Control buttons
+                prevCardBtn.addEventListener('click', previousCard);
+                nextCardBtn.addEventListener('click', nextCard);
+                flipCardBtn.addEventListener('click', flipCard);
+                checkAnswerBtn.addEventListener('click', checkAnswer);
+                skipQuestionBtn.addEventListener('click', skipQuestion);
+                restartQuizBtn.addEventListener('click', restartQuiz);
+
+                // Keyboard navigation
+                document.addEventListener('keydown', handleKeyboard);
+            }
+
+            // Set study mode
+            function setMode(mode) {
+                currentMode = mode;
+                isFlipped = false;
+                selectedAnswer = null;
+
+                // Update mode buttons
+                [studyModeBtn, quizModeBtn, reviewModeBtn].forEach(btn => {
+                    btn.classList.remove('bg-hebrew-gold', 'text-hebrew-blue');
+                    btn.classList.add('bg-gray-200', 'text-gray-700');
+                });
+
+                if (mode === 'study') {
+                    studyModeBtn.classList.remove('bg-gray-200', 'text-gray-700');
+                    studyModeBtn.classList.add('bg-hebrew-gold', 'text-hebrew-blue');
+                    showStudyMode();
+                } else if (mode === 'quiz') {
+                    quizModeBtn.classList.remove('bg-gray-200', 'text-gray-700');
+                    quizModeBtn.classList.add('bg-hebrew-gold', 'text-hebrew-blue');
+                    startQuiz();
+                } else if (mode === 'review') {
+                    reviewModeBtn.classList.remove('bg-gray-200', 'text-gray-700');
+                    reviewModeBtn.classList.add('bg-hebrew-gold', 'text-hebrew-blue');
+                    showReviewMode();
+                }
+            }
+
+            // Show study mode
+            function showStudyMode() {
+                cardFront.classList.remove('hidden');
+                cardBack.classList.add('hidden');
+                quizElements.classList.add('hidden');
+                quizButtons.classList.add('hidden');
+                scoreDisplay.classList.add('hidden');
+                flipCardBtn.classList.remove('hidden');
+                updateCardDisplay();
+            }
+
+            // Start quiz mode
+            function startQuiz() {
+                quizScore = 0;
+                quizAnswers = [];
+                currentCardIndex = 0;
+                cardFront.classList.remove('hidden');
+                cardBack.classList.add('hidden');
+                quizElements.classList.remove('hidden');
+                quizButtons.classList.remove('hidden');
+                scoreDisplay.classList.add('hidden');
+                flipCardBtn.classList.add('hidden');
+                generateQuizQuestion();
+            }
+
+            // Show review mode
+            function showReviewMode() {
+                cardFront.classList.remove('hidden');
+                cardBack.classList.add('hidden');
+                quizElements.classList.add('hidden');
+                quizButtons.classList.add('hidden');
+                scoreDisplay.classList.add('hidden');
+                flipCardBtn.classList.remove('hidden');
+                updateCardDisplay();
+            }
+
+            // Generate quiz question
+            function generateQuizQuestion() {
+                const currentCard = flashcardData[currentCardIndex];
+                const correctAnswer = currentCard.meaning;
+                
+                // Generate wrong answers
+                const wrongAnswers = flashcardData
+                    .filter((_, index) => index !== currentCardIndex)
+                    .map(card => card.meaning)
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, 3);
+
+                // Mix correct and wrong answers
+                const allAnswers = [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5);
+
+                // Update display
+                cardTitle.textContent = currentCard.transliteration;
+                cardHebrew.textContent = currentCard.hebrew;
+
+                // Generate options
+                quizOptions.innerHTML = allAnswers.map((answer, index) => `
+                    <button class="quiz-option w-full p-3 text-left border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors" 
+                            data-answer="${answer}" data-index="${index}">
+                        ${String.fromCharCode(65 + index)}. ${answer}
+                    </button>
+                `).join('');
+
+                // Add click listeners to options
+                quizOptions.querySelectorAll('.quiz-option').forEach(option => {
+                    option.addEventListener('click', function() {
+                        // Remove previous selection
+                        quizOptions.querySelectorAll('.quiz-option').forEach(opt => {
+                            opt.classList.remove('bg-hebrew-gold', 'text-hebrew-blue');
+                            opt.classList.add('border-gray-300');
+                        });
+
+                        // Select this option
+                        this.classList.add('bg-hebrew-gold', 'text-hebrew-blue');
+                        this.classList.remove('border-gray-300');
+                        selectedAnswer = this.dataset.answer;
+                    });
+                });
+
+                updateCardDisplay();
+            }
+
+            // Check quiz answer
+            function checkAnswer() {
+                if (!selectedAnswer) return;
+
+                const currentCard = flashcardData[currentCardIndex];
+                const isCorrect = selectedAnswer === currentCard.meaning;
+
+                if (isCorrect) {
+                    quizScore++;
+                    showCardAnimation('correct');
+                } else {
+                    showCardAnimation('incorrect');
+                }
+
+                quizAnswers.push({
+                    card: currentCard,
+                    selected: selectedAnswer,
+                    correct: isCorrect
+                });
+
+                // Move to next question or finish quiz
+                setTimeout(() => {
+                    if (currentCardIndex < flashcardData.length - 1) {
+                        currentCardIndex++;
+                        selectedAnswer = null;
+                        generateQuizQuestion();
+                    } else {
+                        finishQuiz();
+                    }
+                }, 1500);
+            }
+
+            // Skip question
+            function skipQuestion() {
+                const currentCard = flashcardData[currentCardIndex];
+                quizAnswers.push({
+                    card: currentCard,
+                    selected: null,
+                    correct: false
+                });
+
+                if (currentCardIndex < flashcardData.length - 1) {
+                    currentCardIndex++;
+                    selectedAnswer = null;
+                    generateQuizQuestion();
+                } else {
+                    finishQuiz();
+                }
+            }
+
+            // Finish quiz
+            function finishQuiz() {
+                quizElements.classList.add('hidden');
+                quizButtons.classList.add('hidden');
+                scoreDisplay.classList.remove('hidden');
+                finalScore.textContent = `${quizScore}/${flashcardData.length}`;
+                
+                // Track progress
+                if (window.progressTracker) {
+                    window.progressTracker.track('vocabulary', `Quiz Score: ${quizScore}/${flashcardData.length}`);
+                }
+            }
+
+            // Restart quiz
+            function restartQuiz() {
+                startQuiz();
+            }
+
+            // Show card animation
+            function showCardAnimation(type) {
+                cardOverlay.classList.remove('opacity-0');
+                cardOverlay.classList.add('opacity-20');
+                
+                if (type === 'correct') {
+                    cardOverlay.style.backgroundColor = '#10B981'; // Green
+                } else {
+                    cardOverlay.style.backgroundColor = '#EF4444'; // Red
+                }
+
+                setTimeout(() => {
+                    cardOverlay.classList.add('opacity-0');
+                    cardOverlay.classList.remove('opacity-20');
+                }, 500);
+            }
+
+            // Update card display
+            function updateCardDisplay() {
+                const currentCard = flashcardData[currentCardIndex];
+                
+                cardTitle.textContent = currentCard.transliteration;
+                cardHebrew.textContent = currentCard.hebrew;
+                cardMeaning.textContent = currentCard.meaning;
+                cardDescription.textContent = currentCard.description;
+
+                // Update counter and progress
+                cardCounter.textContent = `Card ${currentCardIndex + 1} of ${flashcardData.length}`;
+                const progress = ((currentCardIndex + 1) / flashcardData.length) * 100;
+                cardProgress.style.width = `${progress}%`;
+
+                // Update button states
+                prevCardBtn.disabled = currentCardIndex === 0;
+                nextCardBtn.disabled = currentCardIndex === flashcardData.length - 1;
+            }
+
+            // Navigation functions
+            function previousCard() {
+                if (currentCardIndex > 0) {
+                    currentCardIndex--;
+                    isFlipped = false;
+                    updateCardDisplay();
+                    if (currentMode === 'study' || currentMode === 'review') {
+                        showStudyMode();
+                    }
+                }
+            }
+
+            function nextCard() {
+                if (currentCardIndex < flashcardData.length - 1) {
+                    currentCardIndex++;
+                    isFlipped = false;
+                    updateCardDisplay();
+                    if (currentMode === 'study' || currentMode === 'review') {
+                        showStudyMode();
+                    }
+                }
+            }
+
+            function flipCard() {
+                isFlipped = !isFlipped;
+                cardFront.classList.toggle('hidden');
+                cardBack.classList.toggle('hidden');
+                
+                // Add flip animation
+                const card = document.getElementById('currentCard');
+                card.style.transform = 'rotateY(180deg)';
+                setTimeout(() => {
+                    card.style.transform = 'rotateY(0deg)';
+                }, 300);
+            }
+
+            // Keyboard navigation
+            function handleKeyboard(e) {
+                if (e.target.tagName === 'INPUT') return;
+
+                switch(e.key) {
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        previousCard();
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        nextCard();
+                        break;
+                    case ' ':
+                        e.preventDefault();
+                        if (currentMode === 'study' || currentMode === 'review') {
+                            flipCard();
+                        }
+                        break;
+                    case 'Enter':
+                        e.preventDefault();
+                        if (currentMode === 'quiz' && selectedAnswer) {
+                            checkAnswer();
+                        }
+                        break;
+                }
+            }
+
+            // Initialize
+            init();
+        }
+
+        // Dark mode functionality
+        function initDarkMode() {
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+            const html = document.documentElement;
+
+            // Check for saved theme preference or default to light mode
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+
+            // Apply theme
+            function applyTheme(dark) {
+                if (dark) {
+                    html.classList.add('dark');
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                } else {
+                    html.classList.remove('dark');
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                }
+            }
+
+            // Initialize theme
+            applyTheme(isDark);
+
+            // Toggle theme
+            darkModeToggle.addEventListener('click', function() {
+                const isDarkMode = html.classList.contains('dark');
+                const newTheme = isDarkMode ? 'light' : 'dark';
+                
+                applyTheme(!isDarkMode);
+                localStorage.setItem('theme', newTheme);
+            });
+
+            // Listen for system theme changes
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+                if (!localStorage.getItem('theme')) {
+                    applyTheme(e.matches);
+                }
+            });
+
+            // Mobile dark mode toggle
+            const mobileDarkModeToggle = document.getElementById('mobile-dark-mode-toggle');
+            const mobileSunIcon = document.getElementById('mobile-sun-icon');
+            const mobileMoonIcon = document.getElementById('mobile-moon-icon');
+            const mobileThemeText = document.getElementById('mobile-theme-text');
+
+            if (mobileDarkModeToggle) {
+                mobileDarkModeToggle.addEventListener('click', function() {
+                    const isDarkMode = html.classList.contains('dark');
+                    const newTheme = isDarkMode ? 'light' : 'dark';
+                    
+                    applyTheme(!isDarkMode);
+                    localStorage.setItem('theme', newTheme);
+                    
+                    // Update mobile theme text
+                    mobileThemeText.textContent = isDarkMode ? 'Dark Mode' : 'Light Mode';
+                });
+
+                // Update mobile theme text on load
+                const isDark = html.classList.contains('dark');
+                mobileThemeText.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+            }
+        }
+
+        // Loading states and animations functionality
+        function initLoadingStates() {
+            // Add loading states to buttons
+            function addLoadingState(button, text = 'Loading...') {
+                const originalText = button.textContent;
+                button.disabled = true;
+                button.innerHTML = `
+                    <div class="flex items-center justify-center">
+                        <div class="loading-spinner mr-2"></div>
+                        ${text}
+                    </div>
+                `;
+                return () => {
+                    button.disabled = false;
+                    button.textContent = originalText;
+                };
+            }
+
+            // Add success animation
+            function addSuccessAnimation(element) {
+                element.classList.add('bounce');
+                setTimeout(() => {
+                    element.classList.remove('bounce');
+                }, 600);
+            }
+
+            // Add error animation
+            function addErrorAnimation(element) {
+                element.classList.add('shake');
+                setTimeout(() => {
+                    element.classList.remove('shake');
+                }, 500);
+            }
+
+            // Add pulse glow to important elements
+            function addPulseGlow(element) {
+                element.classList.add('pulse-glow');
+                setTimeout(() => {
+                    element.classList.remove('pulse-glow');
+                }, 4000);
+            }
+
+            // Enhanced audio button functionality
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.play-audio')) {
+                    const button = e.target.closest('.play-audio');
+                    const resetButton = addLoadingState(button, 'Speaking...');
+                    
+                    // Simulate audio loading
+                    setTimeout(() => {
+                        resetButton();
+                        addSuccessAnimation(button);
+                    }, 2000);
+                }
+            });
+
+            // Enhanced flashcard flip animation
+            const flipCardBtn = document.getElementById('flipCard');
+            if (flipCardBtn) {
+                flipCardBtn.addEventListener('click', function() {
+                    const card = document.getElementById('currentCard');
+                    card.classList.add('card-flip');
+                    
+                    setTimeout(() => {
+                        card.classList.add('flipped');
+                    }, 50);
+                });
+            }
+
+            // Add scroll-triggered animations
+            function initScrollAnimations() {
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('fade-in-up');
+                        }
+                    });
+                }, observerOptions);
+
+                // Observe sections for scroll animations
+                document.querySelectorAll('section').forEach(section => {
+                    observer.observe(section);
+                });
+            }
+
+            // Initialize scroll animations
+            initScrollAnimations();
+
+            // Add hover effects to cards
+            document.addEventListener('mouseenter', function(e) {
+                if (e.target.closest('.bg-white.rounded-lg.shadow-md')) {
+                    e.target.closest('.bg-white.rounded-lg.shadow-md').classList.add('hover-lift');
+                }
+            }, true);
+
+            document.addEventListener('mouseleave', function(e) {
+                if (e.target.closest('.bg-white.rounded-lg.shadow-md')) {
+                    e.target.closest('.bg-white.rounded-lg.shadow-md').classList.remove('hover-lift');
+                }
+            }, true);
+
+            // Add loading states to form submissions
+            const journalButton = document.querySelector('.save-journal');
+            if (journalButton) {
+                journalButton.addEventListener('click', function() {
+                    const resetButton = addLoadingState(this, 'Saving...');
+                    
+                    setTimeout(() => {
+                        resetButton();
+                        addSuccessAnimation(this);
+                        this.textContent = 'Saved!';
+                        setTimeout(() => {
+                            this.textContent = 'Save Entry';
+                        }, 2000);
+                    }, 1000);
+                });
+            }
+
+            // Add pulse glow to CTA button
+            const ctaButton = document.querySelector('button[onclick="scrollToSection(\'lessons\')"]');
+            if (ctaButton) {
+                addPulseGlow(ctaButton);
+            }
+
+            // Expose functions globally for use by other modules
+            window.loadingStates = {
+                addLoading: addLoadingState,
+                addSuccess: addSuccessAnimation,
+                addError: addErrorAnimation,
+                addPulse: addPulseGlow
+            };
+        }
+
+        // Quiz System functionality
+        function initQuizSystem() {
+            // Quiz data
+            const quizData = {
+                alphabet: [
+                    { question: "What is the Hebrew letter for 'A'?", hebrew: "א", options: ["Aleph", "Bet", "Gimel", "Dalet"], correct: 0 },
+                    { question: "What is the Hebrew letter for 'B'?", hebrew: "ב", options: ["Aleph", "Bet", "Gimel", "Dalet"], correct: 1 },
+                    { question: "What is the Hebrew letter for 'G'?", hebrew: "ג", options: ["Aleph", "Bet", "Gimel", "Dalet"], correct: 2 },
+                    { question: "What is the Hebrew letter for 'D'?", hebrew: "ד", options: ["Aleph", "Bet", "Gimel", "Dalet"], correct: 3 },
+                    { question: "What is the Hebrew letter for 'H'?", hebrew: "ה", options: ["He", "Vav", "Zayin", "Chet"], correct: 0 },
+                    { question: "What is the Hebrew letter for 'V'?", hebrew: "ו", options: ["He", "Vav", "Zayin", "Chet"], correct: 1 },
+                    { question: "What is the Hebrew letter for 'Z'?", hebrew: "ז", options: ["He", "Vav", "Zayin", "Chet"], correct: 2 },
+                    { question: "What is the Hebrew letter for 'CH'?", hebrew: "ח", options: ["He", "Vav", "Zayin", "Chet"], correct: 3 },
+                    { question: "What is the Hebrew letter for 'T'?", hebrew: "ט", options: ["Tet", "Yod", "Kaf", "Lamed"], correct: 0 },
+                    { question: "What is the Hebrew letter for 'Y'?", hebrew: "י", options: ["Tet", "Yod", "Kaf", "Lamed"], correct: 1 }
+                ],
+                names: [
+                    { question: "What does יהוה mean?", hebrew: "יהוה", options: ["The Most High", "God, Creator", "Lord, Master", "Almighty"], correct: 0 },
+                    { question: "What does אלוהים mean?", hebrew: "אלוהים", options: ["The Most High", "God, Creator", "Lord, Master", "Almighty"], correct: 1 },
+                    { question: "What does אדוני mean?", hebrew: "אדוני", options: ["The Most High", "God, Creator", "Lord, Master", "Almighty"], correct: 2 },
+                    { question: "What does שדי mean?", hebrew: "שדי", options: ["The Most High", "God, Creator", "Lord, Master", "Almighty"], correct: 3 },
+                    { question: "What does משה mean?", hebrew: "משה", options: ["Moses", "Elijah", "Isaiah", "Jeremiah"], correct: 0 },
+                    { question: "What does אליהו mean?", hebrew: "אליהו", options: ["Moses", "Elijah", "Isaiah", "Jeremiah"], correct: 1 },
+                    { question: "What does ישעיהו mean?", hebrew: "ישעיהו", options: ["Moses", "Elijah", "Isaiah", "Jeremiah"], correct: 2 },
+                    { question: "What does ירמיהו mean?", hebrew: "ירמיהו", options: ["Moses", "Elijah", "Isaiah", "Jeremiah"], correct: 3 },
+                    { question: "What does אברהם mean?", hebrew: "אברהם", options: ["Abraham", "Isaac", "Jacob", "Joseph"], correct: 0 },
+                    { question: "What does יצחק mean?", hebrew: "יצחק", options: ["Abraham", "Isaac", "Jacob", "Joseph"], correct: 1 }
+                ],
+                matching: [
+                    { hebrew: "יהוה", meaning: "The Most High" },
+                    { hebrew: "אלוהים", meaning: "God, Creator" },
+                    { hebrew: "משה", meaning: "Moses" },
+                    { hebrew: "אליהו", meaning: "Elijah" },
+                    { hebrew: "אברהם", meaning: "Abraham" },
+                    { hebrew: "יצחק", meaning: "Isaac" },
+                    { hebrew: "יעקב", meaning: "Jacob" },
+                    { hebrew: "יוסף", meaning: "Joseph" },
+                    { hebrew: "ראובן", meaning: "Reuben" },
+                    { hebrew: "שמעון", meaning: "Simeon" }
+                ],
+                fillBlank: [
+                    { question: "Complete: יהוה means 'The _____ High'", answer: "Most", hebrew: "יהוה" },
+                    { question: "Complete: אלוהים means 'God, _____'", answer: "Creator", hebrew: "אלוהים" },
+                    { question: "Complete: משה means '_____'", answer: "Moses", hebrew: "משה" },
+                    { question: "Complete: אליהו means '_____'", answer: "Elijah", hebrew: "אליהו" },
+                    { question: "Complete: אברהם means '_____'", answer: "Abraham", hebrew: "אברהם" },
+                    { question: "Complete: יצחק means '_____'", answer: "Isaac", hebrew: "יצחק" },
+                    { question: "Complete: יעקב means '_____'", answer: "Jacob", hebrew: "יעקב" },
+                    { question: "Complete: יוסף means '_____'", answer: "Joseph", hebrew: "יוסף" },
+                    { question: "Complete: ראובן means '_____'", answer: "Reuben", hebrew: "ראובן" },
+                    { question: "Complete: שמעון means '_____'", answer: "Simeon", hebrew: "שמעון" }
+                ]
+            };
+
+            let currentQuiz = null;
+            let currentQuestionIndex = 0;
+            let score = 0;
+            let selectedAnswer = null;
+            let userAnswer = null;
+
+            // Get DOM elements
+            const quizButtons = {
+                alphabet: document.getElementById('alphabet-quiz-btn'),
+                names: document.getElementById('names-quiz-btn'),
+                matching: document.getElementById('matching-quiz-btn'),
+                fillBlank: document.getElementById('fill-blank-quiz-btn')
+            };
+
+            const quizElements = {
+                instructions: document.getElementById('quiz-instructions'),
+                progress: document.getElementById('quiz-progress'),
+                progressText: document.getElementById('quiz-progress-text'),
+                progressBar: document.getElementById('quiz-progress-bar'),
+                score: document.getElementById('quiz-score'),
+                question: document.getElementById('quiz-question'),
+                content: document.getElementById('question-content'),
+                controls: document.getElementById('quiz-controls'),
+                submit: document.getElementById('submit-answer'),
+                skip: document.getElementById('skip-question'),
+                next: document.getElementById('next-question'),
+                results: document.getElementById('quiz-results'),
+                finalScore: document.getElementById('final-score'),
+                scoreMessage: document.getElementById('score-message'),
+                restart: document.getElementById('restart-quiz'),
+                newQuiz: document.getElementById('new-quiz')
+            };
+
+            // Initialize quiz system
+            function init() {
+                setupEventListeners();
+            }
+
+            // Setup event listeners
+            function setupEventListeners() {
+                // Quiz type buttons
+                Object.keys(quizButtons).forEach(type => {
+                    quizButtons[type].addEventListener('click', () => startQuiz(type));
+                });
+
+                // Quiz control buttons
+                quizElements.submit.addEventListener('click', submitAnswer);
+                quizElements.skip.addEventListener('click', skipQuestion);
+                quizElements.next.addEventListener('click', nextQuestion);
+                quizElements.restart.addEventListener('click', () => startQuiz(currentQuiz));
+                quizElements.newQuiz.addEventListener('click', resetQuiz);
+            }
+
+            // Start a new quiz
+            function startQuiz(type) {
+                currentQuiz = type;
+                currentQuestionIndex = 0;
+                score = 0;
+                selectedAnswer = null;
+                userAnswer = null;
+
+                // Update UI
+                updateQuizTypeButtons(type);
+                showQuizElements();
+                updateProgress();
+                generateQuestion();
+            }
+
+            // Update quiz type buttons
+            function updateQuizTypeButtons(activeType) {
+                Object.keys(quizButtons).forEach(type => {
+                    const btn = quizButtons[type];
+                    if (type === activeType) {
+                        btn.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                        btn.classList.add('bg-hebrew-gold', 'text-hebrew-blue');
+                    } else {
+                        btn.classList.remove('bg-hebrew-gold', 'text-hebrew-blue');
+                        btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                    }
+                });
+            }
+
+            // Show quiz elements
+            function showQuizElements() {
+                quizElements.instructions.classList.add('hidden');
+                quizElements.progress.classList.remove('hidden');
+                quizElements.question.classList.remove('hidden');
+                quizElements.controls.classList.remove('hidden');
+                quizElements.results.classList.add('hidden');
+            }
+
+            // Generate question based on quiz type
+            function generateQuestion() {
+                const questions = quizData[currentQuiz];
+                const question = questions[currentQuestionIndex];
+
+                if (currentQuiz === 'matching') {
+                    generateMatchingQuestion(question);
+                } else if (currentQuiz === 'fillBlank') {
+                    generateFillBlankQuestion(question);
+                } else {
+                    generateMultipleChoiceQuestion(question);
+                }
+
+                selectedAnswer = null;
+                userAnswer = null;
+                updateControls();
+            }
+
+            // Generate multiple choice question
+            function generateMultipleChoiceQuestion(question) {
+                quizElements.content.innerHTML = `
+                    <div class="text-center mb-6">
+                        <div class="text-4xl font-hebrew text-hebrew-blue mb-4">${question.hebrew}</div>
+                        <h3 class="text-xl font-bold text-hebrew-burgundy mb-6">${question.question}</h3>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        ${question.options.map((option, index) => `
+                            <button class="quiz-option p-4 text-left border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" 
+                                    data-answer="${index}">
+                                ${String.fromCharCode(65 + index)}. ${option}
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+
+                // Add click listeners to options
+                quizElements.content.querySelectorAll('.quiz-option').forEach(option => {
+                    option.addEventListener('click', function() {
+                        // Remove previous selection
+                        quizElements.content.querySelectorAll('.quiz-option').forEach(opt => {
+                            opt.classList.remove('bg-hebrew-gold', 'text-hebrew-blue');
+                            opt.classList.add('border-gray-300', 'dark:border-gray-600');
+                        });
+
+                        // Select this option
+                        this.classList.add('bg-hebrew-gold', 'text-hebrew-blue');
+                        this.classList.remove('border-gray-300', 'dark:border-gray-600');
+                        selectedAnswer = parseInt(this.dataset.answer);
+                    });
+                });
+            }
+
+            // Generate matching question
+            function generateMatchingQuestion(question) {
+                const allItems = [...quizData.matching];
+                const correctItem = question;
+                const wrongItems = allItems.filter(item => item.hebrew !== correctItem.hebrew).sort(() => Math.random() - 0.5).slice(0, 3);
+                const allOptions = [correctItem, ...wrongItems].sort(() => Math.random() - 0.5);
+
+                quizElements.content.innerHTML = `
+                    <div class="text-center mb-6">
+                        <div class="text-4xl font-hebrew text-hebrew-blue mb-4">${correctItem.hebrew}</div>
+                        <h3 class="text-xl font-bold text-hebrew-burgundy mb-6">Match the Hebrew word with its meaning:</h3>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        ${allOptions.map((option, index) => `
+                            <button class="quiz-option p-4 text-left border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" 
+                                    data-answer="${option.hebrew}">
+                                ${option.meaning}
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+
+                // Add click listeners to options
+                quizElements.content.querySelectorAll('.quiz-option').forEach(option => {
+                    option.addEventListener('click', function() {
+                        // Remove previous selection
+                        quizElements.content.querySelectorAll('.quiz-option').forEach(opt => {
+                            opt.classList.remove('bg-hebrew-gold', 'text-hebrew-blue');
+                            opt.classList.add('border-gray-300', 'dark:border-gray-600');
+                        });
+
+                        // Select this option
+                        this.classList.add('bg-hebrew-gold', 'text-hebrew-blue');
+                        this.classList.remove('border-gray-300', 'dark:border-gray-600');
+                        selectedAnswer = this.dataset.answer;
+                    });
+                });
+            }
+
+            // Generate fill in the blank question
+            function generateFillBlankQuestion(question) {
+                quizElements.content.innerHTML = `
+                    <div class="text-center mb-6">
+                        <div class="text-4xl font-hebrew text-hebrew-blue mb-4">${question.hebrew}</div>
+                        <h3 class="text-xl font-bold text-hebrew-burgundy mb-6">${question.question}</h3>
+                    </div>
+                    <div class="max-w-md mx-auto">
+                        <input type="text" id="fill-blank-input" 
+                               class="w-full p-4 text-center text-lg border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-hebrew-gold focus:border-transparent dark:bg-gray-700 dark:text-white" 
+                               placeholder="Type your answer here...">
+                    </div>
+                `;
+
+                // Focus on input
+                const input = document.getElementById('fill-blank-input');
+                input.focus();
+                input.addEventListener('input', function() {
+                    userAnswer = this.value.trim();
+                    updateControls();
+                });
+            }
+
+            // Update progress
+            function updateProgress() {
+                const totalQuestions = quizData[currentQuiz].length;
+                const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+                
+                quizElements.progressText.textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
+                quizElements.progressBar.style.width = `${progress}%`;
+                quizElements.score.textContent = `Score: ${score}`;
+            }
+
+            // Update control buttons
+            function updateControls() {
+                const canSubmit = selectedAnswer !== null || userAnswer !== null;
+                quizElements.submit.disabled = !canSubmit;
+            }
+
+            // Submit answer
+            function submitAnswer() {
+                if (selectedAnswer === null && userAnswer === null) return;
+
+                const questions = quizData[currentQuiz];
+                const question = questions[currentQuestionIndex];
+                let isCorrect = false;
+
+                if (currentQuiz === 'matching') {
+                    isCorrect = selectedAnswer === question.hebrew;
+                } else if (currentQuiz === 'fillBlank') {
+                    isCorrect = userAnswer.toLowerCase() === question.answer.toLowerCase();
+                } else {
+                    isCorrect = selectedAnswer === question.correct;
+                }
+
+                if (isCorrect) {
+                    score++;
+                    showAnswerFeedback(true);
+                } else {
+                    showAnswerFeedback(false);
+                }
+
+                // Show correct answer
+                showCorrectAnswer(question, isCorrect);
+                
+                // Update UI
+                quizElements.submit.classList.add('hidden');
+                quizElements.skip.classList.add('hidden');
+                quizElements.next.classList.remove('hidden');
+                updateProgress();
+            }
+
+            // Show answer feedback
+            function showAnswerFeedback(isCorrect) {
+                const feedback = document.createElement('div');
+                feedback.className = `fixed top-4 right-4 p-4 rounded-lg text-white font-bold z-50 ${isCorrect ? 'bg-green-500' : 'bg-red-500'}`;
+                feedback.textContent = isCorrect ? 'Correct!' : 'Incorrect!';
+                document.body.appendChild(feedback);
+
+                setTimeout(() => {
+                    feedback.remove();
+                }, 2000);
+            }
+
+            // Show correct answer
+            function showCorrectAnswer(question, isCorrect) {
+                const correctAnswerDiv = document.createElement('div');
+                correctAnswerDiv.className = `mt-4 p-4 rounded-lg ${isCorrect ? 'bg-green-100 dark:bg-green-900' : 'bg-red-100 dark:bg-red-900'}`;
+                
+                if (currentQuiz === 'fillBlank') {
+                    correctAnswerDiv.innerHTML = `
+                        <p class="font-bold">Correct answer: ${question.answer}</p>
+                    `;
+                } else if (currentQuiz === 'matching') {
+                    correctAnswerDiv.innerHTML = `
+                        <p class="font-bold">Correct answer: ${question.meaning}</p>
+                    `;
+                } else {
+                    correctAnswerDiv.innerHTML = `
+                        <p class="font-bold">Correct answer: ${question.options[question.correct]}</p>
+                    `;
+                }
+                
+                quizElements.content.appendChild(correctAnswerDiv);
+            }
+
+            // Skip question
+            function skipQuestion() {
+                nextQuestion();
+            }
+
+            // Next question
+            function nextQuestion() {
+                currentQuestionIndex++;
+                
+                if (currentQuestionIndex >= quizData[currentQuiz].length) {
+                    finishQuiz();
+                } else {
+                    generateQuestion();
+                    updateProgress();
+                }
+            }
+
+            // Finish quiz
+            function finishQuiz() {
+                const totalQuestions = quizData[currentQuiz].length;
+                const percentage = Math.round((score / totalQuestions) * 100);
+                
+                quizElements.question.classList.add('hidden');
+                quizElements.controls.classList.add('hidden');
+                quizElements.results.classList.remove('hidden');
+                
+                quizElements.finalScore.textContent = `${score}/${totalQuestions}`;
+                
+                let message = '';
+                if (percentage >= 90) message = 'Excellent! You\'re a Hebrew master!';
+                else if (percentage >= 80) message = 'Great job! You\'re doing very well!';
+                else if (percentage >= 70) message = 'Good work! Keep practicing!';
+                else if (percentage >= 60) message = 'Not bad! Study more and try again!';
+                else message = 'Keep studying! You\'ll get better!';
+                
+                quizElements.scoreMessage.textContent = message;
+
+                // Track progress
+                if (window.progressTracker) {
+                    window.progressTracker.track('vocabulary', `Quiz Score: ${score}/${totalQuestions}`);
+                }
+            }
+
+            // Reset quiz
+            function resetQuiz() {
+                quizElements.instructions.classList.remove('hidden');
+                quizElements.progress.classList.add('hidden');
+                quizElements.question.classList.add('hidden');
+                quizElements.controls.classList.add('hidden');
+                quizElements.results.classList.add('hidden');
+                
+                currentQuiz = null;
+                currentQuestionIndex = 0;
+                score = 0;
+                selectedAnswer = null;
+                userAnswer = null;
+            }
+
+            // Initialize
+            init();
+        }
+
+
+        // Search functionality
+        function initSearch() {
+            const searchInput = document.getElementById('search-input');
+            const searchResults = document.getElementById('search-results');
+            const searchResultsContent = document.getElementById('search-results-content');
+            const clearSearch = document.getElementById('clear-search');
+
+            if (!searchInput || !searchResults) return;
+
+            // Search data - all Hebrew content
+            const searchData = [
+                // Names of YAH
+                { hebrew: 'יהוה', transliteration: 'YAHUAH', meaning: 'The Most High', category: 'Names of YAH', section: 'names' },
+                { hebrew: 'אלוהים', transliteration: 'ELOHIM', meaning: 'God, Creator', category: 'Names of YAH', section: 'names' },
+                { hebrew: 'אדוני', transliteration: 'ADONAI', meaning: 'Lord, Master', category: 'Names of YAH', section: 'names' },
+                { hebrew: 'שדי', transliteration: 'SHADDAI', meaning: 'Almighty', category: 'Names of YAH', section: 'names' },
+                
+                // Prophets
+                { hebrew: 'משה', transliteration: 'MOSHE', meaning: 'Moses', category: 'Prophets', section: 'names' },
+                { hebrew: 'אליהו', transliteration: 'ELIYAHU', meaning: 'Elijah', category: 'Prophets', section: 'names' },
+                { hebrew: 'ישעיהו', transliteration: 'YESHAYAHU', meaning: 'Isaiah', category: 'Prophets', section: 'names' },
+                { hebrew: 'ירמיהו', transliteration: 'YIRMEYAHU', meaning: 'Jeremiah', category: 'Prophets', section: 'names' },
+                
+                // Patriarchs
+                { hebrew: 'אברהם', transliteration: 'AVRAHAM', meaning: 'Abraham', category: 'Patriarchs', section: 'names' },
+                { hebrew: 'יצחק', transliteration: 'YITZCHAK', meaning: 'Isaac', category: 'Patriarchs', section: 'names' },
+                { hebrew: 'יעקב', transliteration: 'YAAKOV', meaning: 'Jacob', category: 'Patriarchs', section: 'names' },
+                { hebrew: 'יוסף', transliteration: 'YOSEF', meaning: 'Joseph', category: 'Patriarchs', section: 'names' },
+                
+                // Tribes
+                { hebrew: 'ראובן', transliteration: 'REUVEN', meaning: 'Reuben', category: 'Twelve Tribes', section: 'names' },
+                { hebrew: 'שמעון', transliteration: 'SHIMON', meaning: 'Simeon', category: 'Twelve Tribes', section: 'names' },
+                { hebrew: 'לוי', transliteration: 'LEVI', meaning: 'Levi', category: 'Twelve Tribes', section: 'names' },
+                { hebrew: 'יהודה', transliteration: 'YEHUDah', meaning: 'Judah', category: 'Twelve Tribes', section: 'names' },
+                
+                // Hebrew Alphabet
+                { hebrew: 'א', transliteration: 'Aleph', meaning: 'First letter', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'ב', transliteration: 'Bet', meaning: 'House', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'ג', transliteration: 'Gimel', meaning: 'Camel', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'ד', transliteration: 'Dalet', meaning: 'Door', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'ה', transliteration: 'He', meaning: 'Window', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'ו', transliteration: 'Vav', meaning: 'Hook', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'ז', transliteration: 'Zayin', meaning: 'Weapon', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'ח', transliteration: 'Chet', meaning: 'Fence', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'ט', transliteration: 'Tet', meaning: 'Snake', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'י', transliteration: 'Yod', meaning: 'Hand', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'כ', transliteration: 'Kaf', meaning: 'Palm', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'ל', transliteration: 'Lamed', meaning: 'Ox Goad', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'מ', transliteration: 'Mem', meaning: 'Water', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'נ', transliteration: 'Nun', meaning: 'Fish', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'ס', transliteration: 'Samech', meaning: 'Support', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'ע', transliteration: 'Ayin', meaning: 'Eye', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'פ', transliteration: 'Pe', meaning: 'Mouth', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'צ', transliteration: 'Tzadi', meaning: 'Fish Hook', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'ק', transliteration: 'Qof', meaning: 'Back of Head', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'ר', transliteration: 'Resh', meaning: 'Head', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'ש', transliteration: 'Shin', meaning: 'Tooth', category: 'Hebrew Alphabet', section: 'lessons' },
+                { hebrew: 'ת', transliteration: 'Tav', meaning: 'Mark', category: 'Hebrew Alphabet', section: 'lessons' },
+                
+                // Weekly Words
+                { hebrew: 'שָׁלוֹם', transliteration: 'Shalom', meaning: 'Peace, completeness, wholeness', category: 'Weekly Word', section: 'lessons' },
+                { hebrew: 'אֱמוּנָה', transliteration: 'Emunah', meaning: 'Faith, faithfulness, trust', category: 'Weekly Word', section: 'resources' }
+            ];
+
+            // Search function
+            function searchContent(query) {
+                if (!query || query.length < 2) {
+                    searchResults.classList.add('hidden');
+                    return;
+                }
+
+                const results = searchData.filter(item => 
+                    item.hebrew.toLowerCase().includes(query.toLowerCase()) ||
+                    item.transliteration.toLowerCase().includes(query.toLowerCase()) ||
+                    item.meaning.toLowerCase().includes(query.toLowerCase()) ||
+                    item.category.toLowerCase().includes(query.toLowerCase())
+                );
+
+                displaySearchResults(results, query);
+            }
+
+            // Display search results
+            function displaySearchResults(results, query) {
+                if (results.length === 0) {
+                    searchResultsContent.innerHTML = `
+                        <div class="p-4 text-center text-gray-500">
+                            <p>No results found for "${query}"</p>
+                            <p class="text-sm mt-1">Try searching in Hebrew, transliteration, or English</p>
+                        </div>
+                    `;
+                } else {
+                    searchResultsContent.innerHTML = results.map(item => `
+                        <div class="p-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer border-b border-gray-100 dark:border-gray-600 last:border-b-0 search-result-item transition-colors duration-200" 
+                             data-section="${item.section}" data-category="${item.category}">
+                            <div class="flex items-center space-x-3">
+                                <div class="text-2xl font-hebrew text-hebrew-blue">${item.hebrew}</div>
+                                <div class="flex-1">
+                                    <div class="font-bold text-hebrew-gold">${item.transliteration}</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-300">${item.meaning}</div>
+                                    <div class="text-xs text-gray-400 dark:text-gray-500">${item.category}</div>
+                                </div>
+                                <div class="text-xs text-hebrew-blue">Go to ${item.section}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                searchResults.classList.remove('hidden');
+            }
+
+            // Event listeners
+            searchInput.addEventListener('input', function() {
+                const query = this.value.trim();
+                if (query) {
+                    clearSearch.classList.remove('hidden');
+                    searchContent(query);
+                } else {
+                    clearSearch.classList.add('hidden');
+                    searchResults.classList.add('hidden');
+                }
+            });
+
+            clearSearch.addEventListener('click', function() {
+                searchInput.value = '';
+                searchResults.classList.add('hidden');
+                this.classList.add('hidden');
+                searchInput.focus();
+            });
+
+            // Handle search result clicks
+            searchResultsContent.addEventListener('click', function(e) {
+                const resultItem = e.target.closest('.search-result-item');
+                if (resultItem) {
+                    const section = resultItem.dataset.section;
+                    scrollToSection(section);
+                    searchResults.classList.add('hidden');
+                    searchInput.value = '';
+                    clearSearch.classList.add('hidden');
+                }
+            });
+
+            // Close search results when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                    searchResults.classList.add('hidden');
+                }
+            });
+
+            // Keyboard navigation
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    searchResults.classList.add('hidden');
+                    this.blur();
+                }
+            });
+        }
+
+        // Audio pronunciation functionality
+        function initAudioPronunciation() {
+            // Check if speech synthesis is supported
+            if (!('speechSynthesis' in window)) {
+                console.warn('Speech synthesis not supported');
+                return;
+            }
+
+            // Hebrew pronunciation mappings
+            const hebrewPronunciations = {
+                'YAHUAH': 'YAH-U-AH',
+                'ELOHIM': 'EL-O-HEEM',
+                'ADONAI': 'AD-O-NAI',
+                'SHADDAI': 'SHAD-DAI',
+                'MOSHE': 'MO-SHE',
+                'ELIYAHU': 'EL-I-YA-HU',
+                'YESHAYAHU': 'YESH-A-YA-HU',
+                'YIRMEYAHU': 'YIR-ME-YA-HU',
+                'AVRAHAM': 'AV-RA-HAM',
+                'YITZCHAK': 'YITZ-CHAK',
+                'YAAKOV': 'YA-A-KOV',
+                'YOSEF': 'YO-SEF',
+                'REUVEN': 'RE-U-VEN',
+                'SHIMON': 'SHI-MON',
+                'LEVI': 'LE-VI',
+                'YEHUDah': 'YE-HU-DAH',
+                'RUACH_HAQODESH': 'RU-ACH HA-QO-DESH',
+                'YAHUSHA_MASHIACH': 'YA-HU-SHA HA-MA-SHI-ACH',
+                'GENESIS_1_1': 'BE-RE-SHIT BA-RA E-LO-HEEM ET HA-SHA-MA-YIM VE-ET HA-A-RETZ'
+            };
+
+            // Function to speak text
+            function speakText(text, lang = 'he-IL') {
+                if (speechSynthesis.speaking) {
+                    speechSynthesis.cancel();
+                }
+
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang;
+                utterance.rate = 0.7;
+                utterance.pitch = 1;
+                utterance.volume = 0.8;
+
+                // Try to find a Hebrew voice
+                const voices = speechSynthesis.getVoices();
+                const hebrewVoice = voices.find(voice => 
+                    voice.lang.startsWith('he') || 
+                    voice.name.includes('Hebrew') ||
+                    voice.name.includes('hebrew')
+                );
+                
+                if (hebrewVoice) {
+                    utterance.voice = hebrewVoice;
+                }
+
+                speechSynthesis.speak(utterance);
+            }
+
+            // Add click handlers to all audio buttons
+            const audioButtons = document.querySelectorAll('[data-word]');
+            audioButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const word = this.getAttribute('data-word');
+                    const pronunciation = hebrewPronunciations[word];
+                    
+                    if (pronunciation) {
+                        // Show loading state
+                        const originalText = this.textContent;
+                        this.textContent = '🔊 Speaking...';
+                        this.disabled = true;
+                        
+                        speakText(pronunciation);
+                        
+                        // Reset button after speaking
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                            this.disabled = false;
+                        }, 3000);
+                    } else {
+                        console.warn('No pronunciation found for:', word);
+                    }
+                });
+            });
+
+            // Add audio buttons to name cards
+            function addAudioToNameCards() {
+                const nameCards = document.querySelectorAll('#namesOfYah, #prophets, #patriarchs, #tribes');
+                nameCards.forEach(grid => {
+                    const cards = grid.querySelectorAll('.bg-white.rounded-lg.shadow-md');
+                    cards.forEach(card => {
+                        const transliteration = card.querySelector('.text-lg.font-bold.text-hebrew-gold');
+                        if (transliteration && !card.querySelector('.play-audio')) {
+                            const audioButton = document.createElement('button');
+                            audioButton.className = 'play-audio bg-hebrew-gold hover:bg-yellow-500 text-hebrew-blue font-bold py-1 px-2 rounded text-xs transition-colors mt-2';
+                            audioButton.textContent = '🔊';
+                            audioButton.setAttribute('data-word', transliteration.textContent);
+                            card.appendChild(audioButton);
+                        }
+                    });
+                });
+            }
+
+            // Initialize audio for name cards after they're generated
+            setTimeout(addAudioToNameCards, 1000);
+        }
+
+        // Hebrew font loading optimization
+        function optimizeHebrewFonts() {
+            // Add loading class to Hebrew elements
+            const hebrewElements = document.querySelectorAll('.font-hebrew');
+            hebrewElements.forEach(element => {
+                element.classList.add('loading');
+            });
+
+            // Check if Hebrew font is loaded
+            function checkHebrewFont() {
+                const testElement = document.createElement('span');
+                testElement.style.fontFamily = 'Noto Sans Hebrew';
+                testElement.style.fontSize = '16px';
+                testElement.style.visibility = 'hidden';
+                testElement.textContent = 'א';
+                document.body.appendChild(testElement);
+                
+                const isLoaded = testElement.offsetWidth > 0;
+                document.body.removeChild(testElement);
+                
+                if (isLoaded) {
+                    // Font is loaded, remove loading class
+                    hebrewElements.forEach(element => {
+                        element.classList.remove('loading');
+                    });
+                } else {
+                    // Font not loaded yet, check again
+                    setTimeout(checkHebrewFont, 100);
+                }
+            }
+
+            // Start checking after a short delay
+            setTimeout(checkHebrewFont, 100);
+        }
+
+        // Flashcard functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize mobile menu
+            initMobileMenu();
+            
+            // Optimize Hebrew fonts
+            optimizeHebrewFonts();
+            
+            // Initialize audio pronunciation
+            initAudioPronunciation();
+            
+            // Initialize search functionality
+            initSearch();
+            
+            // Initialize progress tracking
+            initProgressTracking();
+            
+            // Initialize enhanced flashcards
+            initEnhancedFlashcards();
+            
+            // Initialize dark mode
+            initDarkMode();
+            
+            // Initialize loading states and animations
+            initLoadingStates();
+            
+            // Initialize quiz system
+            initQuizSystem();
+
+            // Generate complete Hebrew alphabet cards
+            const alphabetGrid = document.getElementById('alphabetGrid');
+            if (alphabetGrid) {
+                const hebrewAlphabet = [
+                    // Regular letters
+                    { letter: 'א', name: 'Aleph', sound: 'a', final: '', meaning: 'Ox, strength' },
+                    { letter: 'ב', name: 'Bet', sound: 'b', final: 'ב', meaning: 'House' },
+                    { letter: 'ג', name: 'Gimel', sound: 'g', final: 'ג', meaning: 'Camel' },
+                    { letter: 'ד', name: 'Dalet', sound: 'd', final: 'ד', meaning: 'Door' },
+                    { letter: 'ה', name: 'He', sound: 'h', final: 'ה', meaning: 'Window' },
+                    { letter: 'ו', name: 'Vav', sound: 'v', final: 'ו', meaning: 'Hook' },
+                    { letter: 'ז', name: 'Zayin', sound: 'z', final: 'ז', meaning: 'Weapon' },
+                    { letter: 'ח', name: 'Chet', sound: 'ch', final: 'ח', meaning: 'Fence' },
+                    { letter: 'ט', name: 'Tet', sound: 't', final: 'ט', meaning: 'Snake' },
+                    { letter: 'י', name: 'Yod', sound: 'y', final: 'י', meaning: 'Hand' },
+                    { letter: 'כ', name: 'Kaf', sound: 'k', final: 'ך', meaning: 'Palm' },
+                    { letter: 'ל', name: 'Lamed', sound: 'l', final: 'ל', meaning: 'Ox Goad' },
+                    { letter: 'מ', name: 'Mem', sound: 'm', final: 'ם', meaning: 'Water' },
+                    { letter: 'נ', name: 'Nun', sound: 'n', final: 'ן', meaning: 'Fish' },
+                    { letter: 'ס', name: 'Samech', sound: 's', final: 'ס', meaning: 'Support' },
+                    { letter: 'ע', name: 'Ayin', sound: 'a', final: 'ע', meaning: 'Eye' },
+                    { letter: 'פ', name: 'Pe', sound: 'p', final: 'ף', meaning: 'Mouth' },
+                    { letter: 'צ', name: 'Tzadi', sound: 'tz', final: 'ץ', meaning: 'Fish Hook' },
+                    { letter: 'ק', name: 'Qof', sound: 'q', final: 'ק', meaning: 'Back of Head' },
+                    { letter: 'ר', name: 'Resh', sound: 'r', final: 'ר', meaning: 'Head' },
+                    { letter: 'ש', name: 'Shin', sound: 'sh', final: 'ש', meaning: 'Tooth' },
+                    { letter: 'ת', name: 'Tav', sound: 't', final: 'ת', meaning: 'Mark' }
+                ];
+
+                hebrewAlphabet.forEach((letter, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white dark:bg-gray-700 rounded-lg shadow-md p-4 text-center hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105 hover-lift smooth-transition';
+                    card.style.animationDelay = `${index * 0.1}s`;
+                    card.classList.add('fade-in-up');
+                    card.innerHTML = `
+                        <div class="text-4xl font-hebrew text-hebrew-blue mb-2">${letter.letter}</div>
+                        ${letter.final && letter.final !== letter.letter ? `<div class="text-2xl font-hebrew text-hebrew-burgundy mb-1">${letter.final}</div>` : ''}
+                        <div class="text-sm font-bold text-hebrew-gold mb-1">${letter.name}</div>
+                        <div class="text-xs text-gray-600 mb-1">${letter.sound}</div>
+                        <div class="text-xs text-gray-500 italic">${letter.meaning}</div>
+                        ${letter.final && letter.final !== letter.letter ? `<div class="text-xs text-gray-400 mt-1">Final form</div>` : ''}
+                    `;
+                    alphabetGrid.appendChild(card);
+                });
+            }
+
+            // Generate name cards
+            const nameCategories = {
+                namesOfYah: [
+                    { hebrew: 'יהוה', transliteration: 'YAHUAH', meaning: 'The Most High' },
+                    { hebrew: 'אלוהים', transliteration: 'ELOHIM', meaning: 'God, Creator' },
+                    { hebrew: 'אדוני', transliteration: 'ADONAI', meaning: 'Lord, Master' },
+                    { hebrew: 'שדי', transliteration: 'SHADDAI', meaning: 'Almighty' }
+                ],
+                prophets: [
+                    { hebrew: 'משה', transliteration: 'MOSHE', meaning: 'Moses' },
+                    { hebrew: 'אליהו', transliteration: 'ELIYAHU', meaning: 'Elijah' },
+                    { hebrew: 'ישעיהו', transliteration: 'YESHAYAHU', meaning: 'Isaiah' },
+                    { hebrew: 'ירמיהו', transliteration: 'YIRMEYAHU', meaning: 'Jeremiah' }
+                ],
+                patriarchs: [
+                    { hebrew: 'אברהם', transliteration: 'AVRAHAM', meaning: 'Abraham' },
+                    { hebrew: 'יצחק', transliteration: 'YITZCHAK', meaning: 'Isaac' },
+                    { hebrew: 'יעקב', transliteration: 'YAAKOV', meaning: 'Jacob' },
+                    { hebrew: 'יוסף', transliteration: 'YOSEF', meaning: 'Joseph' }
+                ],
+                tribes: [
+                    { hebrew: 'ראובן', transliteration: 'REUVEN', meaning: 'Reuben' },
+                    { hebrew: 'שמעון', transliteration: 'SHIMON', meaning: 'Simeon' },
+                    { hebrew: 'לוי', transliteration: 'LEVI', meaning: 'Levi' },
+                    { hebrew: 'יהודה', transliteration: 'YEHUDah', meaning: 'Judah' }
+                ]
+            };
+
+            Object.keys(nameCategories).forEach(categoryId => {
+                const grid = document.getElementById(categoryId);
+                if (grid) {
+                    nameCategories[categoryId].forEach((name, index) => {
+                        const card = document.createElement('div');
+                        card.className = 'bg-white dark:bg-gray-700 rounded-lg shadow-md p-4 text-center hover:shadow-lg transition-all duration-300 hover-lift smooth-transition';
+                        card.style.animationDelay = `${index * 0.1}s`;
+                        card.classList.add('fade-in-up');
+                        card.innerHTML = `
+                            <div class="text-2xl font-hebrew text-hebrew-blue mb-2">${name.hebrew}</div>
+                            <div class="text-lg font-bold text-hebrew-gold mb-1">${name.transliteration}</div>
+                            <div class="text-sm text-gray-600">${name.meaning}</div>
+                        `;
+                        grid.appendChild(card);
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
